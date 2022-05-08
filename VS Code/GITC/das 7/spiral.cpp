@@ -120,8 +120,8 @@ int main()
         }
         
     
-    _getch();
-    _getch(); //vorpeszi terminal@ chpakvi
+    //_getch();
+    //_getch(); //vorpeszi terminal@ chpakvi
 
     return 0;
 }
