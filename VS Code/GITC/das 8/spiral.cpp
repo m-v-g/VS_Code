@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <Windows.h> //guyneri hamar
+#include <conio.h>
 
 using namespace std;
 HANDLE hConsole; //eli guyneri hamar
@@ -135,6 +136,7 @@ int main()
     
     print( reinterpret_cast<int *>( array ), n, m ); //chaskcanq te inch erinq, bayc erinq
 
+    _getch();
     return 0;
 }
 
