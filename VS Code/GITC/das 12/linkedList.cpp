@@ -164,7 +164,28 @@ class LinkedLIst
             }
             return temp -> value;
         } //gtnelu funkciayi verj
-        
+
+        bool find_value(int value)
+        {
+            Node* tempFront = head;
+            Node* tempBack = tail;
+            for(int i = 1; i <= listsQuantity; ++i)
+            {
+                if(value == tempFront -> value || value == tempBack -> value)
+                {
+                    cout << endl << "The value " << value << " found in " << i << " steps at index " << endl;
+                    return 0;
+                }
+                
+                else
+                {
+                    cout << endl << "The value " << value << " not found" << endl;
+                    return 1;
+                }
+                tempFront = tempFront -> next;
+                tempBack = tempBack -> prev;
+            }
+        }
         
 };
 
@@ -187,13 +208,15 @@ int main()
     cin >> choisIndex;
     cout << endl << "The value at index " << choisIndex << " equal to " << asd.get_index(choisIndex) << endl << endl;
     */
+    bool val = asd.find_value(30);
     asd.print(1); //1->avers, 0->revers
+    /*
     cout << endl << "pulled at back: " << asd.pop_back() << " value" << endl << endl;
     asd.print(1); //1->avers, 0->revers
     cout << endl << "pulled at front: " << asd.pop_front() << " value" << endl << endl;
     asd.print(0); //1->avers, 0->revers
     cout << endl << "list is empty? " << asd.is_empty() << endl << endl;
-    
+    */
 
     return 0;
 }
