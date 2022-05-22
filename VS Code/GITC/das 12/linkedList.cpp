@@ -165,7 +165,7 @@ class LinkedLIst
             return temp -> value;
         } //gtnelu funkciayi verj
 
-        bool find_value(int value)
+        void find_value(int value) //arjeq@ gtnox funkcia
         {
             Node* tempFront = head;
             Node* tempBack = tail;
@@ -174,18 +174,15 @@ class LinkedLIst
                 if(value == tempFront -> value || value == tempBack -> value)
                 {
                     cout << endl << "The value " << value << " found in " << i << " steps at index " << endl;
-                    return 0;
+                    return;
                 }
-                
-                else
-                {
-                    cout << endl << "The value " << value << " not found" << endl;
-                    return 1;
-                }
+              
                 tempFront = tempFront -> next;
                 tempBack = tempBack -> prev;
             }
-        }
+            cout << endl << "The value " << value << " not found" << endl;
+            return;
+        } //arjeqov funkciai verj
         
 };
 
@@ -208,7 +205,7 @@ int main()
     cin >> choisIndex;
     cout << endl << "The value at index " << choisIndex << " equal to " << asd.get_index(choisIndex) << endl << endl;
     */
-    bool val = asd.find_value(30);
+    asd.find_value(40);
     asd.print(1); //1->avers, 0->revers
     /*
     cout << endl << "pulled at back: " << asd.pop_back() << " value" << endl << endl;
