@@ -173,7 +173,7 @@ class LinkedLIst
             {
                 if(value == tempFront -> value || value == tempBack -> value)
                 {
-                    cout << endl << "The value " << value << " found in " << i << " steps at index " << endl;
+                    cout << endl << "The value " << value << " found in " << i << " steps" << endl;
                     return;
                 }
               
