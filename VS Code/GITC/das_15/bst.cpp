@@ -137,6 +137,13 @@ class Node
                 cout << "Vizvolsya konstruktor dlya obekta " << this << endl;
             }
 
+            BST(BST& x) //konstruktor kopirovaniya
+            {   //x-i mej pahvum e goyutyun unecox obyekti tvyalner@
+                cout << "Vizvolsya konstruktor kopirovaniya dlya obekta " << this << endl;
+                Node* temp = x.root;   //stexcenq nor obekt iran veragrenq poxancvac obekti root
+                
+            }
+
             ~BST()
             {
                 cout << "Vizvolsya destruktor dlya obekta " << this << endl;
@@ -194,7 +201,7 @@ class Node
         }
        
         //tree.print();
-        cout << "find " << tree.find(0) << endl;
+        cout << "find " << tree.find(9) << endl;
 
         return 0;
     }
