@@ -27,7 +27,15 @@ class Stack
         Node* tail = nullptr; //stexcenq Node(ukazatel tipi), tail anunov popoxakan inq@ bdi exni verjin uzeli hascen
         int listsQuantity = 0; //lister qanak@ hasvelu hamar
         
-    public:    
+    public:  
+        ~ Stack()
+        {
+            if(head == nullptr)
+            {
+                delete head;
+            }
+            
+        }  
         void print(bool av_re) //tpelu funkcia
         { 
             if(av_re) //avers
