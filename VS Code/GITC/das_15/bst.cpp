@@ -137,11 +137,25 @@ class Node
                 cout << "Vizvolsya konstruktor dlya obekta " << this << endl;
             }
 
-            BST(BST& x) //konstruktor kopirovaniya
+            BST(BST& other) //konstruktor kopirovaniya
             {   //x-i mej pahvum e goyutyun unecox obyekti tvyalner@
                 cout << "Vizvolsya konstruktor kopirovaniya dlya obekta " << this << endl;
-                Node* temp = x.root;   //stexcenq nor obekt iran veragrenq poxancvac obekti root
-                
+                Node* temp;
+                temp->value = other.root->value;   //stexcenq nor obekt iran veragrenq poxancvac obekti root
+                if(other.root == nullptr)
+                {
+                    cout << "the tree is empty" << endl;
+                    return;
+                }
+                if(other.root->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
+                {
+                    
+
+                }
+                if(other.root->right != nullptr) //ete @ntaciki aj koxm@ banm ka
+                {
+                    
+                }
             }
 
             ~BST()
