@@ -150,7 +150,6 @@ class Node
                 if(other.root->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
                 {
                     
-
                 }
                 if(other.root->right != nullptr) //ete @ntaciki aj koxm@ banm ka
                 {
@@ -202,6 +201,28 @@ class Node
                     return find(root, x);
                 }
             }
+
+            bool operator== (BST& other) //hamematelu operator (arjeq@ kpoxancvi ssilkov)
+        {
+            Node* temp1 = root;
+            Node* temp2 = other.root;
+            if(temp1->value == temp2->value)
+            {
+                return true;
+            }
+            else
+            {
+                if(temp1->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
+                {
+                    
+                }
+                if(temp1->right != nullptr) //ete @ntaciki aj koxm@ banm ka
+                {
+                    
+                }
+            }
+            return false; //ete mer sax paymanner@ minchev es bavararvel en uremn iranq havasar en
+        }
     
     };
 
