@@ -31,78 +31,66 @@ class Node
         private:
             Node* root = nullptr;
             int leavesAmount = 0;
-
+/*
             void print(Node* temp) //tpelu funkcia
             {
-                if(temp->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
+                if(temp->left) //ete @ntaciki dzax koxm@ banm ka
                 {
                     print(temp->left);    //rekursiv erdanq dzax
                 }
                 cout << "VALUE\t" << temp->value << endl;
-                if(temp->right != nullptr) //ete @ntaciki aj koxm@ banm ka
+                if(temp->right) //ete @ntaciki aj koxm@ banm ka
                 {
                     print(temp->right);    //rekursiv erdanq aj
                 }
             }
-
-            void destroy(Node* temp) //
+*/
+            void print(Node* temp) //tpelu funkcia
             {
-                if(temp == nullptr)
+                if(!temp) //ete @ntaciki dzax koxm@ banm ka
                 {
-                    cout << "the tree is empty" << endl;
                     return;
                 }
-                if(temp->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
-                {
-                    destroy(temp->left);    //rekursiv erdanq dzax
-                }
-                if(temp->right != nullptr) //ete @ntaciki aj koxm@ banm ka
-                {
-                    destroy(temp->right);    //rekursiv erdanq aj
-                }
-                -- leavesAmount;
-                delete temp;
+                print(temp->left);
+                cout << "VALUE\t" << temp->value << endl;
+                print(temp->right);
+                
             }
 
-            void add(int x, Node* temp)
+            void destroy(Node* &temp) //
             {
-                if(root == nullptr)
+                if(!temp)
                 {
-                    cout << "the value " << x << " inserted in the root" << endl;
+                    return;
+                }
+                destroy(temp->left);    //rekursiv erdanq
+                temp->left = nullptr;
+                destroy(temp->right);    //rekursiv erdanq aj
+                temp->right = nullptr;
+                -- leavesAmount;
+                delete temp;
+                temp = nullptr;
+            }
+
+            bool add(int x, Node* &temp) //!peredayom ne ukazatel a ssilku na etot ukazatel
+            {
+                if(!temp) //!ete khandipenq zroyakan ukazatel
+                {
                     ++ leavesAmount;
-                    root = new Node(x); //stexcenq nor element iran poxancenq mer valun u qani vor inq@ arajinne inq@ bdi exni mer armat@
+                    temp = new Node(x); //
+                    return true;
+                }
+                else if(x == temp->value)
+                {
+                    return false;
                 }
                 else if(x < temp->value) //ete x poqr e @ntaciqi valuic uremn kerdanq dzax
                 {
-                    if(temp->left == nullptr) //gnacel enq dzax bayc ete ed chyux@ datark e
-                    {
-                        cout << "the value " << x << " inserted at left" << endl;
-                        ++ leavesAmount;
-                        temp->left = new Node(x); //stexcenq nor element u @ntaciki left@ iran cuyc ta
-                    }
-                    else //isk ete chyux@ datark ch
-                    {
-                        cout << "RECURSIVE CALL TO LEFT" << endl;
-                        add(x, temp->left); //rekursiv kanchenq es funkcian bayc arden @ntacikic dzax
-                    }
+                    return add(x, temp->left); //rekursiv kanchenq es funkcian bayc arden @ntacikic dzax
                 }
-                else if(x > temp->value) //ete x mec e @ntaciqi valuic uremn kerdanq aj
+                else //ete x mec e @ntaciqi valuic uremn kerdanq aj
                 {
-                    if(temp->right == nullptr) //gnacel enq aj bayc ete ed chyux@ datark e
-                    {
-                        cout << "the value " << x << " inserted at right" << endl;
-                        ++ leavesAmount;
-                        temp->right = new Node(x); //stexcenq nor element u @ntaciki right@ iran cuyc ta
-                    }
-                    else //isk ete chyux@ datark ch
-                    {
-                        cout << "RECURSIVE CALL TO RIGHT" << endl;
-                        add(x, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
-                    }
-                }
-                else
-                {
-                    cout << "Node is exist" << endl;
+                    return add(x, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
                 }
             }
 
@@ -116,6 +104,7 @@ class Node
                 {
                     return temp;
                 }
+                
                 if(copyX < temp->value)
                 {
                     return find(temp->left, copyX);    //rekursiv erdanq dzax
@@ -127,6 +116,12 @@ class Node
                 return nullptr;
             }
 
+            Node* delNode(Node* node, int copyX)
+            {
+                return nullptr;
+            }
+            
+
         public:
 
             BST()
@@ -134,57 +129,28 @@ class Node
                 cout << "Vizvolsya konstruktor dlya obekta " << this << endl;
             }
 
-            BST(BST& other) //konstruktor kopirovaniya
-            {   //x-i mej pahvum e goyutyun unecox obyekti tvyalner@
-                cout << "Vizvolsya konstruktor kopirovaniya dlya obekta " << this << endl;
-                Node* temp;
-                temp->value = other.root->value;   //stexcenq nor obekt iran veragrenq poxancvac obekti root
-                if(other.root == nullptr)
-                {
-                    cout << "the tree is empty" << endl;
-                    return;
-                }
-                if(other.root->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
-                {
-                    
-                }
-                if(other.root->right != nullptr) //ete @ntaciki aj koxm@ banm ka
-                {
-                    
-                }
-            }
-
             ~BST()
             {
                 cout << "Vizvolsya destruktor dlya obekta " << this << endl;
                 destroy(root);
+                
             }
 
             bool is_empty(void)
             {
-                if(root == nullptr)
-                {
-                    return true;
-                }
+                if(!root) return true;
                 else return false;
             }
 
-            void add(int x)
+            bool add(int x)
             {
-                add(x, root);
+                return add(x, root);
             }
 
             void print() //es funkcian bdi grvi or karoxananq myus@ rekursiv kanchenq
             {
-                if(is_empty()) //dzerac het me stugumm el enenq
-                {
-                    cout << "the tree is empty" << endl;
-                }
-                else
-                {
-                    cout << "the trees Leaves Amount " << leavesAmount << endl;
-                    print(root); //stexic nor krnanq peregruzkov mer iskakan funkciain kanchenq
-                }
+                cout << "the trees Leaves Amount " << leavesAmount << endl;
+                print(root); //stexic nor krnanq peregruzkov mer iskakan funkciain kanchenq
             }
 
             bool find(int x)
@@ -192,27 +158,11 @@ class Node
                 return find(root, x);
             }
 
-            bool operator== (BST& other) //hamematelu operator (arjeq@ kpoxancvi ssilkov)
-        {
-            Node* temp1 = root;
-            Node* temp2 = other.root;
-            if(temp1->value == temp2->value)
+            void delVal(int kay)
             {
-                return true;
+                Node* adress = find(root, kay);
+                delNode(adress, kay);
             }
-            else
-            {
-                if(temp1->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
-                {
-                    
-                }
-                if(temp1->right != nullptr) //ete @ntaciki aj koxm@ banm ka
-                {
-                    
-                }
-            }
-            return false; //ete mer sax paymanner@ minchev es bavararvel en uremn iranq havasar en
-        }
     
     };
 
@@ -226,7 +176,29 @@ class Node
         }
        
         //tree.print();
-        cout << "find " << tree.find(9) << endl;
-
+        tree.delVal(6);
+        tree.print();
+        //cout << "find " << tree.find(9) << endl;
+/*
+        string command;
+        cout << "ENTER THE COMMAND\t";
+        cin >> command;
+        if(command == "search")
+        {
+            int kay;
+            cout << "ENTER THE KAY\t";
+            cin >>  kay;
+            cout << endl << (tree.find(kay)) ? "YES\n" : "NO\n"; //ternarny operator
+            cout << endl;
+        }
+        else if(command == "add")
+        {
+            int kay;
+            cout << "ENTER THE KAY\t";
+            cin >>  kay;
+            cout << endl << (tree.add(kay)) ? "DONE\n" : "ALREDY\n"; //ternarny operator
+            cout << endl;
+        }
+*/
         return 0;
     }

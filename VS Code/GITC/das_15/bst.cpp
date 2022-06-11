@@ -97,13 +97,16 @@ class Node
                 if(temp->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
                 {
                     destroy(temp->left);    //rekursiv erdanq dzax
+                    //temp->left = nullptr;
                 }
                 if(temp->right != nullptr) //ete @ntaciki aj koxm@ banm ka
                 {
                     destroy(temp->right);    //rekursiv erdanq aj
+                    //temp->right = nullptr;
                 }
                 -- leavesAmount;
                 delete temp;
+                
             }
 
             Node* find(Node* temp, int copyX)
@@ -135,26 +138,6 @@ class Node
             BST()
             {
                 cout << "Vizvolsya konstruktor dlya obekta " << this << endl;
-            }
-
-            BST(BST& other) //konstruktor kopirovaniya
-            {   //x-i mej pahvum e goyutyun unecox obyekti tvyalner@
-                cout << "Vizvolsya konstruktor kopirovaniya dlya obekta " << this << endl;
-                Node* temp;
-                temp->value = other.root->value;   //stexcenq nor obekt iran veragrenq poxancvac obekti root
-                if(other.root == nullptr)
-                {
-                    cout << "the tree is empty" << endl;
-                    return;
-                }
-                if(other.root->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
-                {
-                    
-                }
-                if(other.root->right != nullptr) //ete @ntaciki aj koxm@ banm ka
-                {
-                    
-                }
             }
 
             ~BST()
@@ -202,41 +185,27 @@ class Node
                 }
             }
 
-            bool operator== (BST& other) //hamematelu operator (arjeq@ kpoxancvi ssilkov)
-        {
-            Node* temp1 = root;
-            Node* temp2 = other.root;
-            if(temp1->value == temp2->value)
+            void del(void)
             {
-                return true;
+                destroy(root);
+                root = nullptr;
             }
-            else
-            {
-                if(temp1->left != nullptr) //ete @ntaciki dzax koxm@ banm ka
-                {
-                    
-                }
-                if(temp1->right != nullptr) //ete @ntaciki aj koxm@ banm ka
-                {
-                    
-                }
-            }
-            return false; //ete mer sax paymanner@ minchev es bavararvel en uremn iranq havasar en
-        }
-    
     };
 
     int main()
     {
         BST tree;
+        tree.print();
+        tree.del();
+        tree.print();
         int array[] = {7, 3, 2, 1, 9, 5, 4, 6, 8};
         for (int i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
         {
             tree.add(array[i]);
         }
-       
+        tree.del();
         //tree.print();
-        cout << "find " << tree.find(9) << endl;
+        //cout << "find " << tree.find(1) << endl;
 
         return 0;
     }
