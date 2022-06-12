@@ -5,7 +5,11 @@
 //destroy funkcia 
 //destructor
 
-
+//konstruktor kopirovaniya
+//operator prisvoivoniya
+//operator sravneniya
+//rekursivnaya funkciya kopirovaniya
+//rekursivnaya funkciya sravneniya
 
 
 #include <iostream>
@@ -26,26 +30,13 @@ class Node
             }
     }; 
 
-    class BST
+    class BST //binarnoe derevo poiska
     {
         private:
             Node* root = nullptr;
             int leavesAmount = 0;
-/*
-            void print(Node* temp) //tpelu funkcia
-            {
-                if(temp->left) //ete @ntaciki dzax koxm@ banm ka
-                {
-                    print(temp->left);    //rekursiv erdanq dzax
-                }
-                cout << "VALUE\t" << temp->value << endl;
-                if(temp->right) //ete @ntaciki aj koxm@ banm ka
-                {
-                    print(temp->right);    //rekursiv erdanq aj
-                }
-            }
-*/
-            void print(Node* temp) //tpelu funkcia
+
+            void print(Node* temp) //rekursivnaya funkciya pechati
             {
                 if(!temp) //ete @ntaciki dzax koxm@ banm ka
                 {
@@ -57,15 +48,15 @@ class Node
                 
             }
 
-            void destroy(Node* &temp) //
+            void destroy(Node* &temp) //rekursivnaya funkciya unichtojeniya
             {
                 if(!temp)
                 {
                     return;
                 }
-                destroy(temp->left);    //rekursiv erdanq
+                destroy(temp->left);
                 temp->left = nullptr;
-                destroy(temp->right);    //rekursiv erdanq aj
+                destroy(temp->right);
                 temp->right = nullptr;
                 -- leavesAmount;
                 delete temp;
@@ -94,7 +85,7 @@ class Node
                 }
             }
 
-            Node* find(Node* temp, int copyX) //rekursiv kkanchenq heto kstugenq
+            Node* find(Node* temp, int copyX) //rekursivnaya funkciya poiska
             {
                 if(!temp)
                 {
@@ -116,68 +107,147 @@ class Node
                 return nullptr;
             }
 
-            Node* delNode(Node* node, int copyX)
+            bool compare(Node* temp1, Node* temp2) //rekursivnaya funkciya sravneniya
             {
-                return nullptr;
+                if((temp1 && !temp2) || (!temp1 && temp2))
+                {
+                    return false;
+                }
+                if(!temp1 && !temp2)
+                {
+                    return true;
+                }
+                if(temp1->value != temp2->value)
+                {
+                    return false;
+                }
+                //return  compare(temp1->left, temp2->left) && compare(temp1->right, temp2->right);
+                bool l = compare(temp1->left, temp2->left);
+                bool r = compare(temp1->right, temp2->right);
+                return l && r;
             }
-            
+
+             void copyRec(const Node* temp) //rekursivnaya funkciya kopirovaniya
+            {
+                if(temp)
+                {
+                    add(temp->value);
+                    copyRec(temp->left);
+                    copyRec(temp->right);
+                }
+            }          
 
         public:
 
-            BST()
+            BST() //konstruktor po umolchaniyu
             {
                 cout << "Vizvolsya konstruktor dlya obekta " << this << endl;
             }
 
-            ~BST()
+            BST(BST& other) //konstruktor kopirovaniya
+            {
+                cout << "Vizvolsya konstruktor kopirovaniya dlya obekta " << this << endl;
+                Node* temp = other.root;
+                copyRec(temp);
+            }
+
+            ~BST() //destruktor
             {
                 cout << "Vizvolsya destruktor dlya obekta " << this << endl;
                 destroy(root);
                 
             }
 
-            bool is_empty(void)
+            bool is_empty(void) //publichnaya ne rekursivnaya funkciya pusto li
             {
-                if(!root) return true;
-                else return false;
+                if(!root)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                } 
             }
 
-            bool add(int x)
+            bool add(int x) //publichnaya abeortka dlya funkcii dobavleniya
             {
                 return add(x, root);
             }
 
-            void print() //es funkcian bdi grvi or karoxananq myus@ rekursiv kanchenq
+            void print() //publichnaya abeortka dlya funkcii pechati
             {
                 cout << "the trees Leaves Amount " << leavesAmount << endl;
                 print(root); //stexic nor krnanq peregruzkov mer iskakan funkciain kanchenq
             }
 
-            bool find(int x)
+            bool find(int temp) //publichnaya abeortka dlya funkcii poiska
             {
-                return find(root, x);
+                return find(root, temp);
             }
 
-            void delVal(int kay)
-            {
-                Node* adress = find(root, kay);
-                delNode(adress, kay);
+            bool operator== (BST& other) //operator sravneniya
+            {      
+                //cout << "Vizvolsya operator sravneniya dlya obekta " << this->root << endl;
+                //cout << "Vizvolsya operator sravneniya dlya obekta " << other.root << endl;
+                if(this->root == other.root) //ete hamematum enq 2 nuyn obyektner@
+                {
+                    return true;
+                }      
+
+                if(leavesAmount != other.leavesAmount)
+                {
+                    return false;
+                }
+                return compare(root, other.root);
             }
+            
+            BST& operator= (const BST& other) //operator prisvoivoniya
+            {
+                //cout << "this root value: " << this->root->value << endl;
+                
+                if(root)
+                {
+                    destroy(root);
+                }
+                Node* temp = other.root;
+                //cout << "other root value: " << temp->value << endl;
+
+                copyRec(temp);
+                return *this;   
+            }
+            
     
     };
 
     int main()
     {
         BST tree;
-        int array[] = {7, 3, 2, 1, 9, 5, 4, 6, 8};
-        for (int i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+        int array1[] = {7, 3, 2, 1, 9, 5, 4, 6, 8};
+        for (int i = 0; i < sizeof(array1) / sizeof(array1[0]); ++i)
         {
-            tree.add(array[i]);
+            tree.add(array1[i]);
         }
-       
+        BST tsar;
+        int array2[] = {70, 30, 20, 10, 90, 50, 40, 60, 80};
+        for (int i = 0; i < sizeof(array2) / sizeof(array2[0]); ++i)
+        {
+            tsar.add(array2[i]);
+        }
+        tsar = tree;
+        cout << "TREE" << endl;
         //tree.print();
-        tree.delVal(6);
-        tree.print();
+        
+        cout << "TSAR" << endl;
+        //tsar.print();
+
+        BST derevo = tree;
+        derevo.print();
+        bool b = tree == tsar;
+        cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
+        cout << endl;
+        //tree.delVal(6);
+        
         //cout << "find " << tree.find(9) << endl;
 /*
         string command;
