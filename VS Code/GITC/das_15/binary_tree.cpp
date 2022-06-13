@@ -68,7 +68,7 @@ class Node
                 if(!temp) //!ete khandipenq zroyakan ukazatel
                 {
                     ++ leavesAmount;
-                    temp = new Node(x); //
+                    temp = new Node(x);
                     return true;
                 }
                 else if(x == temp->value)
@@ -135,7 +135,62 @@ class Node
                     copyRec(temp->left);
                     copyRec(temp->right);
                 }
-            }          
+            }
+
+            Node* delNode(Node* temp, int val) //TODO rekursivnaya funkciya kopirovaniya
+            {
+                if(!temp) //ete datark e
+                {
+                    return nullptr;
+                }
+                if(val == temp->value) //ete gtel enq
+                {
+                    Node* tmp;
+                    if(!temp->right) //ete chuni aj terev
+                    {
+                        tmp = temp->left;
+                    }
+                    else //ete uni aj terev
+                    {
+                        Node* ptr = temp->left; //jamanakavor popoxaan sarqenq u iran veragrenq aj terevi hascen
+                        if(!ptr->left) //ete ed aj@ dzax chuni
+                        {
+                            ptr->left = temp->left;
+				            tmp = ptr;
+                        }
+                        else //ete vseotaki uni
+                        {
+                            Node* pmin = ptr->left;
+                            while(pmin->left)
+                            {
+                                ptr  = pmin;
+                                pmin = ptr->left;
+                            }
+                            ptr->left   = pmin->right;
+                            pmin->left  = temp->left;
+                            pmin->right = temp->right;
+                            tmp = pmin;
+                        }
+                    }
+
+
+                    delete tmp;
+                    -- leavesAmount;
+		            return tmp;
+                }
+                
+		        else if(val < temp->value) //ete poqr e
+                {
+                    temp->left = delNode(temp->left, val); //erdanq dzax
+                }
+
+                else //ete mec e
+                {
+                    temp->left = delNode(temp->left, val); //erdanq aj
+                }
+
+                return nullptr;
+            }        
 
         public:
 
@@ -186,6 +241,11 @@ class Node
                 return find(root, temp);
             }
 
+            void delValue(int x)//publichnaya abeortka dlya funkcii udaleniya
+            {
+                delNode(root, x);
+            }
+
             bool operator== (BST& other) //operator sravneniya
             {      
                 //cout << "Vizvolsya operator sravneniya dlya obekta " << this->root << endl;
@@ -194,7 +254,6 @@ class Node
                 {
                     return true;
                 }      
-
                 if(leavesAmount != other.leavesAmount)
                 {
                     return false;
@@ -205,14 +264,12 @@ class Node
             BST& operator= (const BST& other) //operator prisvoivoniya
             {
                 //cout << "this root value: " << this->root->value << endl;
-                
                 if(root)
                 {
                     destroy(root);
                 }
                 Node* temp = other.root;
                 //cout << "other root value: " << temp->value << endl;
-
                 copyRec(temp);
                 return *this;   
             }
@@ -228,25 +285,29 @@ class Node
         {
             tree.add(array1[i]);
         }
+        /*
         BST tsar;
         int array2[] = {70, 30, 20, 10, 90, 50, 40, 60, 80};
         for (int i = 0; i < sizeof(array2) / sizeof(array2[0]); ++i)
         {
             tsar.add(array2[i]);
         }
-        tsar = tree;
-        cout << "TREE" << endl;
+        */
+
+        //tsar = tree;
+        //cout << "TREE" << endl;
         //tree.print();
         
-        cout << "TSAR" << endl;
+        //cout << "TSAR" << endl;
         //tsar.print();
 
-        BST derevo = tree;
-        derevo.print();
-        bool b = tree == tsar;
-        cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
-        cout << endl;
-        //tree.delVal(6);
+        //BST derevo = tree;
+        //derevo.print();
+        //bool b = tree == tsar;
+        //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
+        //cout << endl;
+        tree.delValue(1);
+        tree.print();
         
         //cout << "find " << tree.find(9) << endl;
 /*
