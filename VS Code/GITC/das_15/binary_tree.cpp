@@ -180,7 +180,7 @@ class Node
 
                     if(temp->left && temp->right) //ete uni ham aj ham dzax terevner
                     {
-
+                        
                     }
                 }
                 if(val < temp->value)
