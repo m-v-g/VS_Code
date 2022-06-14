@@ -5,11 +5,12 @@
 //destroy funkcia 
 //destructor
 
-//konstruktor kopirovaniya
-//operator prisvoivoniya
-//operator sravneniya
-//rekursivnaya funkciya kopirovaniya
-//rekursivnaya funkciya sravneniya
+//konstruktor kopirovaniya 152
+//operator prisvoivoniya 199
+//operator sravneniya 214
+//rekursivnaya funkciya kopirovaniya 130
+//rekursivnaya funkciya sravneniya 110
+//TODO rekursivnaya funkciya kopirovaniya
 
 
 #include <iostream>
@@ -139,56 +140,6 @@ class Node
 
             Node* delNode(Node* temp, int val) //TODO rekursivnaya funkciya kopirovaniya
             {
-                if(!temp) //ete datark e
-                {
-                    return nullptr;
-                }
-                if(val == temp->value) //ete gtel enq
-                {
-                    Node* tmp;
-                    if(!temp->right) //ete chuni aj terev
-                    {
-                        tmp = temp->left;
-                    }
-                    else //ete uni aj terev
-                    {
-                        Node* ptr = temp->left; //jamanakavor popoxaan sarqenq u iran veragrenq aj terevi hascen
-                        if(!ptr->left) //ete ed aj@ dzax chuni
-                        {
-                            ptr->left = temp->left;
-				            tmp = ptr;
-                        }
-                        else //ete vseotaki uni
-                        {
-                            Node* pmin = ptr->left;
-                            while(pmin->left)
-                            {
-                                ptr  = pmin;
-                                pmin = ptr->left;
-                            }
-                            ptr->left   = pmin->right;
-                            pmin->left  = temp->left;
-                            pmin->right = temp->right;
-                            tmp = pmin;
-                        }
-                    }
-
-
-                    delete tmp;
-                    -- leavesAmount;
-		            return tmp;
-                }
-                
-		        else if(val < temp->value) //ete poqr e
-                {
-                    temp->left = delNode(temp->left, val); //erdanq dzax
-                }
-
-                else //ete mec e
-                {
-                    temp->left = delNode(temp->left, val); //erdanq aj
-                }
-
                 return nullptr;
             }        
 
@@ -306,8 +257,8 @@ class Node
         //bool b = tree == tsar;
         //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
         //cout << endl;
-        tree.delValue(1);
-        tree.print();
+        //tree.delValue(4);
+        //tree.print();
         
         //cout << "find " << tree.find(9) << endl;
 /*
