@@ -22,12 +22,14 @@ class Node
             int value;
             Node* left;
             Node* right;
+            Node* parent;
                 
             Node(int x) //nor terev stexcelu konstruktor
             {
                 value = x;
                 left = nullptr;
                 right = nullptr;
+                parent =nullptr;
             }
     }; 
 
@@ -70,6 +72,7 @@ class Node
                 {
                     ++ leavesAmount;
                     temp = new Node(x);
+                    temp->parent = temp;
                     return true;
                 }
                 else if(x == temp->value)
@@ -140,7 +143,55 @@ class Node
 
             Node* delNode(Node* temp, int val) //TODO rekursivnaya funkciya kopirovaniya
             {
-                return nullptr;
+                if(!temp) //ete tsar@ datark e
+                {
+                    return nullptr;
+                }
+                if(val == temp->value)
+                {
+                    if(!temp->left && !temp->right); //ete inq@ terev e
+                    { //stugenq te inq@ ira armati vor koxmn e
+                        if(temp->value < temp->parent->value) //uremn inq@ dzax terevn e
+                        {
+                            temp->parent->left = nullptr;
+                            destroy(temp);
+                        }
+                        if(temp->value > temp->parent->value) //uremn inq@ aj terevn e
+                        {
+                            temp->parent->right = nullptr;
+                            destroy(temp);
+                        }
+                        return temp;
+                    }
+
+                    if(temp->left && !temp->right) //ete uni menak dzax terev
+                    {
+                        temp->left->parent = temp->parent;
+                        temp->parent->left = temp->left;
+                        destroy(temp);
+                    }
+
+                    if(temp->right && !temp->left) //ete uni menak aj terev
+                    {
+                        temp->right->parent = temp->parent;
+                        temp->parent->right = temp->right;
+                        destroy(temp);
+                    }
+
+                    if(temp->left && temp->right) //ete uni ham aj ham dzax terevner
+                    {
+
+                    }
+                }
+                if(val < temp->value)
+                {
+                    return delNode(temp->left, val);
+                }
+                if(val > temp->value)
+                {
+                    return delNode(temp->right, val);
+                }
+                return temp;
             }        
 
         public:
@@ -201,7 +252,8 @@ class Node
             {      
                 //cout << "Vizvolsya operator sravneniya dlya obekta " << this->root << endl;
                 //cout << "Vizvolsya operator sravneniya dlya obekta " << other.root << endl;
-                if(this->root == other.root) //ete hamematum enq 2 nuyn obyektner@
+                //if(this->root == other.root) //ete hamematum enq 2 nuyn obyektner@
+                if(this == &other) //ete hamematum enq 2 nuyn obyektner@
                 {
                     return true;
                 }      
@@ -254,7 +306,7 @@ class Node
 
         //BST derevo = tree;
         //derevo.print();
-        //bool b = tree == tsar;
+        //bool b = tree == tree;
         //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
         //cout << endl;
         //tree.delValue(4);
