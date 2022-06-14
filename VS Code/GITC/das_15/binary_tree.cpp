@@ -72,7 +72,6 @@ class Node
                 {
                     ++ leavesAmount;
                     temp = new Node(x);
-                    temp->parent = temp;
                     return true;
                 }
                 else if(x == temp->value)
@@ -81,11 +80,15 @@ class Node
                 }
                 else if(x < temp->value) //ete x poqr e @ntaciqi valuic uremn kerdanq dzax
                 {
-                    return add(x, temp->left); //rekursiv kanchenq es funkcian bayc arden @ntacikic dzax
+                    bool ret = add(x, temp->left); //rekursiv kanchenq es funkcian bayc arden @ntacikic dzax
+                    temp->left->parent = temp; //kanchic het galuc heto 
+                    return ret;
                 }
                 else //ete x mec e @ntaciqi valuic uremn kerdanq aj
                 {
-                    return add(x, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
+                    bool ret = add(x, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
+                    temp->right->parent = temp; //kanchic het galuc heto 
+                    return ret;
                 }
             }
 
@@ -97,6 +100,7 @@ class Node
                 }
                 if(temp->value == copyX)
                 {
+                    cout << "------ " << temp->parent->value << endl;
                     return temp;
                 }
                 
@@ -143,10 +147,6 @@ class Node
 
             Node* delNode(Node* temp, int val) //TODO rekursivnaya funkciya kopirovaniya
             {
-                if(!temp) //ete tsar@ datark e
-                {
-                    return nullptr;
-                }
                 if(val == temp->value)
                 {
                     if(!temp->left && !temp->right); //ete inq@ terev e
@@ -180,7 +180,7 @@ class Node
 
                     if(temp->left && temp->right) //ete uni ham aj ham dzax terevner
                     {
-                        
+
                     }
                 }
                 if(val < temp->value)
@@ -245,7 +245,8 @@ class Node
 
             void delValue(int x)//publichnaya abeortka dlya funkcii udaleniya
             {
-                delNode(root, x);
+                Node* temp = find(root, x);
+                delNode(temp, x);
             }
 
             bool operator== (BST& other) //operator sravneniya
@@ -309,8 +310,9 @@ class Node
         //bool b = tree == tree;
         //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
         //cout << endl;
-        //tree.delValue(4);
-        //tree.print();
+        tree.delValue(8);
+        tree.print();
+        //tree.find(9);
         
         //cout << "find " << tree.find(9) << endl;
 /*
