@@ -10,7 +10,9 @@
 //operator sravneniya 214
 //rekursivnaya funkciya kopirovaniya 130
 //rekursivnaya funkciya sravneniya 110
-//TODO rekursivnaya funkciya kopirovaniya
+
+//rekursivnaya funkciya kopirovaniya
+//operator ne ravenstva
 
 
 #include <iostream>
@@ -143,16 +145,18 @@ class Node
                 }
             }
 
-            bool delNode(Node* &temp, int val) //TODO rekursivnaya funkciya kopirovaniya
+            bool delNode(Node* temp, int val) //rekursivnaya funkciya kopirovaniya
             //                      7
             //                     / \
             //                    3   9
-            //                   / \   \
-            //                  2   5   8
+            //                   / \  /
+            //                  2   5 8
             //                 /   / \
             //                1   4   6
+            //                         \
+            //                          6.5
             {
-                if(!temp->left && !temp->right) //ete inq@ terev e
+                if(temp->left  == nullptr && temp->right == nullptr) //ete inq@ terev e
                 { //stugenq te inq@ ira armati vor koxmn e
                     cout << "terev e " << endl;
                     if(temp->value < temp->parent->value) //uremn inq@ dzax terevn e
@@ -170,35 +174,51 @@ class Node
                         return true;
                     }
                 }
-                else if(temp->left && !temp->right) //ete uni menak dzax terev
+                else if(temp->left != nullptr && temp->right == nullptr) //ete uni menak dzax terev
                 {
                     cout << "armat e dzax cyuxov" << endl;
                     temp->left->parent = temp->parent;
                     temp->parent->left = temp->left;
+                    temp->left = temp ->right = nullptr; //sranov xzum enq tempi bolor kaper@
                     destroy(temp);
                     return true;
                 }
-                else if(!temp->left && temp->right) //ete uni menak aj terev
+                else if(temp->left == nullptr && temp->right != nullptr) //ete uni menak aj terev
                 {
                     cout << "armat e aj cyuxov" << endl;
                     temp->right->parent = temp->parent;
                     temp->parent->right = temp->right;
+                    temp->left = temp ->right = nullptr; //sranov xzum enq tempi bolor kaper@
                     destroy(temp);
                     return true;
                 }
-                else if(temp->left && temp->right) //ete uni ham aj ham dzax terevner
+                else if(temp->left != nullptr && temp->right != nullptr) //ete uni ham aj ham dzax terevner
                 { //uremn gtnenq @ntacikic meceric amenapoqr@
                     cout << "armat e 2 cyuxov" << endl;
-                    Node* minimal = temp->right;
+                    Node* minimal = temp->right; //erdanq aj gtnenq edtexac amena dzax@
                     while(minimal->left) //dzax koxmov ijninq minchev verj
                     {
                         minimal = minimal->left;
                     }
-                    temp->value = minimal->value;
-                    minimal->parent->left = nullptr;
+                    temp->value = minimal->value; //gtac minimal arjeq@ grenq tempi mej
+                    if(temp->right->left == nullptr && temp->right->right == nullptr) //ete temp ej@ terev e
+                    {
+                        minimal->parent->right = nullptr;
+                    }
+                    else if(temp->right->left == nullptr && temp->right->right != nullptr) //ete temp ej@ uni aj cyux
+                    {
+                        minimal->right->parent = minimal->parent;
+                        minimal->parent->right = minimal->right;
+                        minimal->left = minimal ->right = nullptr; //sranov xzum enq minimali bolor kaper@
+                    }
+                    else //ete temp->right left uni
+                    {
+                        minimal->parent->left = nullptr;
+                    }
                     destroy(minimal);
                     return true;
                 }
+                return true;
             }        
 
         public:
@@ -272,6 +292,11 @@ class Node
                 }
                 return compare(root, other.root);
             }
+
+            bool operator!= (BST& other) //operator sravneniya
+            {      
+                return !compare(root, other.root);
+            }
             
             BST& operator= (const BST& other) //operator prisvoivoniya
             {
@@ -292,7 +317,7 @@ class Node
     int main()
     {
         BST tree;
-        int array1[] = {7, 3, 2, 1, 9, 5, 4, 6, 8};
+        int array1[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
         for (int i = 0; i < sizeof(array1) / sizeof(array1[0]); ++i)
         {
             tree.add(array1[i]);
@@ -315,10 +340,10 @@ class Node
 
         //BST derevo = tree;
         //derevo.print();
-        //bool b = tree == tree;
+        //bool b = tree != tsar;
         //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
         //cout << endl;
-        tree.delValue(9);
+        tree.delValue(50);
         tree.print();
         //tree.find(9);
         
