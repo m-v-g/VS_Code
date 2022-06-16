@@ -46,9 +46,8 @@ class Node
                     return;
                 }
                 print(temp->left);
-                cout << "VALUE\t" << temp->value << endl;
+                cout << temp->value << "\t";
                 print(temp->right);
-                
             }
 
             void destroy(Node* &temp) //rekursivnaya funkciya unichtojeniya
@@ -100,7 +99,6 @@ class Node
                 }
                 if(temp->value == copyX)
                 {
-                    cout << "------ " << temp->parent->value << endl;
                     return temp;
                 }
                 
@@ -145,53 +143,62 @@ class Node
                 }
             }
 
-            Node* delNode(Node* temp, int val) //TODO rekursivnaya funkciya kopirovaniya
+            bool delNode(Node* &temp, int val) //TODO rekursivnaya funkciya kopirovaniya
+            //                      7
+            //                     / \
+            //                    3   9
+            //                   / \   \
+            //                  2   5   8
+            //                 /   / \
+            //                1   4   6
             {
-                if(val == temp->value)
-                {
-                    if(!temp->left && !temp->right); //ete inq@ terev e
-                    { //stugenq te inq@ ira armati vor koxmn e
-                        if(temp->value < temp->parent->value) //uremn inq@ dzax terevn e
-                        {
-                            temp->parent->left = nullptr;
-                            destroy(temp);
-                        }
-                        if(temp->value > temp->parent->value) //uremn inq@ aj terevn e
-                        {
-                            temp->parent->right = nullptr;
-                            destroy(temp);
-                        }
-                        return temp;
-                    }
-
-                    if(temp->left && !temp->right) //ete uni menak dzax terev
+                if(!temp->left && !temp->right) //ete inq@ terev e
+                { //stugenq te inq@ ira armati vor koxmn e
+                    cout << "terev e " << endl;
+                    if(temp->value < temp->parent->value) //uremn inq@ dzax terevn e
                     {
-                        temp->left->parent = temp->parent;
-                        temp->parent->left = temp->left;
+                        cout << "dzax terev e" << endl;
+                        temp->parent->left = nullptr;
                         destroy(temp);
+                        return true;
                     }
-
-                    if(temp->right && !temp->left) //ete uni menak aj terev
+                    if(temp->value > temp->parent->value) //uremn inq@ aj terevn e
                     {
-                        temp->right->parent = temp->parent;
-                        temp->parent->right = temp->right;
+                        cout << "aj terev e" << endl;
+                        temp->parent->right = nullptr;
                         destroy(temp);
+                        return true;
                     }
-
-                    if(temp->left && temp->right) //ete uni ham aj ham dzax terevner
+                }
+                else if(temp->left && !temp->right) //ete uni menak dzax terev
+                {
+                    cout << "armat e dzax cyuxov" << endl;
+                    temp->left->parent = temp->parent;
+                    temp->parent->left = temp->left;
+                    destroy(temp);
+                    return true;
+                }
+                else if(!temp->left && temp->right) //ete uni menak aj terev
+                {
+                    cout << "armat e aj cyuxov" << endl;
+                    temp->right->parent = temp->parent;
+                    temp->parent->right = temp->right;
+                    destroy(temp);
+                    return true;
+                }
+                else if(temp->left && temp->right) //ete uni ham aj ham dzax terevner
+                { //uremn gtnenq @ntacikic meceric amenapoqr@
+                    cout << "armat e 2 cyuxov" << endl;
+                    Node* minimal = temp->right;
+                    while(minimal->left) //dzax koxmov ijninq minchev verj
                     {
-
+                        minimal = minimal->left;
                     }
+                    temp->value = minimal->value;
+                    minimal->parent->left = nullptr;
+                    destroy(minimal);
+                    return true;
                 }
-                if(val < temp->value)
-                {
-                    return delNode(temp->left, val);
-                }
-                if(val > temp->value)
-                {
-                    return delNode(temp->right, val);
-                }
-                return temp;
             }        
 
         public:
@@ -236,6 +243,7 @@ class Node
             {
                 cout << "the trees Leaves Amount " << leavesAmount << endl;
                 print(root); //stexic nor krnanq peregruzkov mer iskakan funkciain kanchenq
+                cout << endl;
             }
 
             bool find(int temp) //publichnaya abeortka dlya funkcii poiska
@@ -310,7 +318,7 @@ class Node
         //bool b = tree == tree;
         //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
         //cout << endl;
-        tree.delValue(8);
+        tree.delValue(9);
         tree.print();
         //tree.find(9);
         

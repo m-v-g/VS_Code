@@ -3,7 +3,8 @@
         "stdio.h": "c",
         "iostream": "cpp",
         "ostream": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "xiosbase": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }
