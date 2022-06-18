@@ -145,7 +145,7 @@ class Node
                 }
             }
 
-            bool delNode(Node* temp, int val) //rekursivnaya funkciya kopirovaniya
+            bool delNodeParent(Node* temp, int val) //funkciya udaleniya
             //                      7
             //                     / \
             //                    3   9
@@ -201,7 +201,7 @@ class Node
                         minimal = minimal->left;
                     }
                     temp->value = minimal->value; //gtac minimal arjeq@ grenq tempi mej
-                    if(temp->right->left == nullptr && temp->right->right == nullptr) //ete temp ej@ terev e
+                    if(temp->right->left == nullptr && temp->right->right == nullptr) //ete temp aj@ terev e
                     {
                         minimal->parent->right = nullptr;
                     }
@@ -219,6 +219,94 @@ class Node
                     return true;
                 }
                 return true;
+            }        
+
+
+        Node* delNode(Node* temp, int val) //TODO rekursivnaya funkciya udaleniya
+            //                      7
+            //                     / \
+            //                    3   9
+            //                   / \  /
+            //                  2   5 8
+            //                 /   / \
+            //                1   4   6
+            //                         \
+            //                          6.5
+            {
+                if(!temp) //ete datark e
+                {
+                    cout << "the tree is empty" << endl;
+                    return temp; //zaglushka or hamarvi false
+                }
+                if(val == temp->value) //ete gtel enq
+                {
+                    Node* tmp; //stexcenq or krnananq erdanq araj
+                    if(!temp->right) //ete chuni aj terev
+                    {
+                        cout << "obrivaem svyazi" << endl;
+                        tmp = temp->left; //zaglushka
+                    }
+                    else //ete uni aj terev
+                    {
+                        Node* ptr = temp->right; //jamanakavor popoxaan sarqenq u ira mej pahenq aj terevin
+                        if(!ptr->left) //ete ed aj@ dzax chuni
+                        {
+                            cout << "perekidivaem svyazi s leva" << endl;
+                            ptr->left = temp->left; //or hankarc dzax chyux@ chkorcnenq
+				            tmp = ptr;//zaglushka
+                        }
+                        else //ete vseotaki uni
+                        {
+                            
+                            Node* minimal = ptr->left;
+                            
+                            while(minimal->left) //ijnenq dzaxov minchev verj
+                            { //ptr misht me qaylm het kexni minimalic (parent)
+                                cout << "444444444444444444" << endl;
+                                ptr  = minimal;
+                                minimal = minimal->left;
+                            }
+                            /*
+                            ptr->left   = minimal->right;
+                            minimal->left  = temp->left;
+                            minimal->right = temp->right;
+                            tmp = minimal;
+                            return nullptr;
+                            */
+                            temp->value = minimal->value; //gtac minimal arjeq@ grenq tempi mej
+                            if(temp->right->left == nullptr && temp->right->right == nullptr) //ete temp aj@ terev e
+                            {
+                                ptr->right = nullptr;
+                            }
+                            else //ete temp->right left uni
+                            {
+                                ptr->left = nullptr;
+                            }
+                            destroy(minimal);
+                            return temp;
+                        }
+                    }
+                    cout << "uje mojno udalit" << endl;
+                    temp->left = temp ->right = nullptr; //sranov xzum enq tempi bolor kaper@
+                    destroy(temp);
+                    //delete temp;
+                    //-- leavesAmount;
+		            return tmp; //banm het veradardznenq or hamarvi true
+                }
+                
+		        else if(val < temp->value) //ete poqr e
+                {
+                    cout << "rekursivny shag vlevo" << endl;
+                    temp->left = delNode(temp->left, val); //erdanq dzax
+                }
+
+                else //ete mec e
+                {
+                    cout << "rekursivny shag vpravo" << endl;
+                    temp->right = delNode(temp->right, val); //erdanq aj
+                }
+
+                return temp;
             }        
 
         public:
@@ -273,8 +361,9 @@ class Node
 
             void delValue(int x)//publichnaya abeortka dlya funkcii udaleniya
             {
-                Node* temp = find(root, x);
-                delNode(temp, x);
+                //Node* temp = find(root, x);
+                //delNode(temp, x);
+                delNode(root, x);
             }
 
             bool operator== (BST& other) //operator sravneniya
@@ -343,7 +432,7 @@ class Node
         //bool b = tree != tsar;
         //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
         //cout << endl;
-        tree.delValue(50);
+        tree.delValue(65);
         tree.print();
         //tree.find(9);
         
