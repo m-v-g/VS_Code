@@ -21,14 +21,16 @@ using namespace std;
 class Node
     {
         public:
-            int value;
+            int login;
+            int password;
             Node* left;
             Node* right;
             Node* parent;
                 
-            Node(int x) //nor terev stexcelu konstruktor
+            Node(int l, int p) //nor terev stexcelu konstruktor
             {
-                value = x;
+                login = l;
+                password = p;
                 left = nullptr;
                 right = nullptr;
                 parent =nullptr;
@@ -48,7 +50,9 @@ class Node
                     return;
                 }
                 print(temp->left);
-                cout << temp->value << "\t";
+                cout << "LOGIN: " << temp->login << "\t";
+                cout << "PASSWORD: " << temp->password << "\t";
+                cout << endl;
                 print(temp->right);
             }
 
@@ -67,65 +71,69 @@ class Node
                 temp = nullptr;
             }
 
-            bool add(int x, Node* &temp) //!peredayom ne ukazatel a ssilku na etot ukazatel
+            bool add(int l, int p, Node* &temp) //!peredayom ne ukazatel a ssilku na etot ukazatel
             {
                 if(!temp) //!ete khandipenq zroyakan ukazatel
                 {
                     ++ leavesAmount;
-                    temp = new Node(x);
+                    temp = new Node(l, p);
                     return true;
                 }
-                else if(x == temp->value)
+                else if(l == temp->login)
                 {
                     return false;
                 }
-                else if(x < temp->value) //ete x poqr e @ntaciqi valuic uremn kerdanq dzax
+                else if(l < temp->login) //ete x poqr e @ntaciqi valuic uremn kerdanq dzax
                 {
-                    bool ret = add(x, temp->left); //rekursiv kanchenq es funkcian bayc arden @ntacikic dzax
+                    bool ret = add(l, p, temp->left); //rekursiv kanchenq es funkcian bayc arden @ntacikic dzax
                     temp->left->parent = temp; //kanchic het galuc heto 
                     return ret;
                 }
                 else //ete x mec e @ntaciqi valuic uremn kerdanq aj
                 {
-                    bool ret = add(x, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
+                    bool ret = add(l, p, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
                     temp->right->parent = temp; //kanchic het galuc heto 
                     return ret;
                 }
             }
 
-            Node* find(Node* temp, int copyX) //rekursivnaya funkciya poiska
+            Node* find(Node* temp, int copyL) //rekursivnaya funkciya poiska
             {
                 if(!temp)
                 {
                     return nullptr;
                 }
-                if(temp->value == copyX)
+                if(temp->login == copyL)
                 {
                     return temp;
                 }
                 
-                if(copyX < temp->value)
+                if(copyL < temp->login)
                 {
-                    return find(temp->left, copyX);    //rekursiv erdanq dzax
+                    return find(temp->left, copyL);    //rekursiv erdanq dzax
                 }
-                if(copyX > temp->value)
+                if(copyL > temp->login)
                 {
-                    return find(temp->right, copyX);    //rekursiv erdanq aj
+                    return find(temp->right, copyL);    //rekursiv erdanq aj
                 }
                 return nullptr;
             }
 
             bool compare(Node* temp1, Node* temp2) //rekursivnaya funkciya sravneniya
             {
-                if((temp1 && !temp2) || (!temp1 && temp2))
+                if((temp1 && !temp2) || (!temp1 && temp2)) //ete me uzel@ ka isk myus@ shka
                 {
                     return false;
                 }
-                if(!temp1 && !temp2)
+                if(!temp1 && !temp2) //ete erkusn el goyutyun chunin
                 {
                     return true;
                 }
-                if(temp1->value != temp2->value)
+                if(temp1->login != temp2->login) //ete loginer@ havasar chen
+                {
+                    return false;
+                }
+                if(temp1->login == temp2->login && temp1->password != temp2->password) //ete loginer@ havasar en bayc parolner@ havasar chen
                 {
                     return false;
                 }
@@ -139,7 +147,7 @@ class Node
             {
                 if(temp)
                 {
-                    add(temp->value);
+                    add(temp->login, temp->password);
                     copyRec(temp->left);
                     copyRec(temp->right);
                 }
@@ -158,13 +166,13 @@ class Node
             {
                 if(!temp->left && !temp->right) //ete inq@ terev e
                 { //stugenq te inq@ ira armati vor koxmn e
-                    if(temp->value < temp->parent->value) //uremn inq@ dzax terevn e
+                    if(temp->login < temp->parent->login) //uremn inq@ dzax terevn e
                     {
                         temp->parent->left = nullptr;
                         destroy(temp);
                         return true;
                     }
-                    if(temp->value > temp->parent->value) //uremn inq@ aj terevn e
+                    if(temp->login > temp->parent->login) //uremn inq@ aj terevn e
                     {
                         temp->parent->right = nullptr;
                         destroy(temp);
@@ -194,7 +202,7 @@ class Node
                     {
                         minimal = minimal->left;
                     }
-                    temp->value = minimal->value; //gtac minimal arjeq@ grenq tempi mej
+                    temp->login = minimal->login; //gtac minimal arjeq@ grenq tempi mej
                     if(!temp->right->left && !temp->right->right) //ete temp aj@ terev e
                     {
                         minimal->parent->right = nullptr;
@@ -231,7 +239,7 @@ class Node
                 {
                     return temp; //zaglushka or hamarvi false
                 }
-                if(val == temp->value) //ete gtel enq
+                if(val == temp->login) //ete gtel enq
                 {
                     Node* tmp; //stexcenq or krnananq erdanq araj
                     if(!temp->right) //ete chuni aj terev
@@ -256,7 +264,7 @@ class Node
                                 ptr  = minimal;
                                 minimal = minimal->left;
                             }
-                            temp->value = minimal->value; //gtac minimal arjeq@ grenq tempi mej
+                            temp->login = minimal->login; //gtac minimal arjeq@ grenq tempi mej
                             if(!temp->right->left && !temp->right->right) //ete temp aj@ terev e
                             {
                                 ptr->right = nullptr;
@@ -274,7 +282,7 @@ class Node
 		            return tmp; //banm het veradardznenq or hamarvi true
                 }
                 
-		        else if(val < temp->value) //ete poqr e
+		        else if(val < temp->login) //ete poqr e
                 {
                     temp->left = delNode(temp->left, val); //erdanq dzax
                 }
@@ -285,7 +293,20 @@ class Node
                 }
 
                 return temp;
-            }        
+            }   
+
+            void changePrivate(Node* temp)
+            {
+                cout << "enter the old password ";
+                int pwd;
+                cin >> pwd;
+                if(pwd == temp->password)
+                {
+                    cout << "enter the new password ";
+                    cin >> pwd;
+                    temp->password = pwd;
+                }
+            }     
 
         public:
 
@@ -320,9 +341,21 @@ class Node
                 } 
             }
 
-            bool add(int x) //publichnaya abeortka dlya funkcii dobavleniya
+            bool add(int l, int p) //publichnaya abeortka dlya funkcii dobavleniya
             {
-                return add(x, root);
+                return add(l, p, root);
+            }
+
+            bool changePublic(int l) //publichnaya abeortka dlya funkcii ixmeneniya porolya
+            {
+                Node* temp = find(root, l);
+                if(temp)
+                {
+                    changePrivate(temp);
+                    return true;
+                }
+                cout << "the user name dose not exist" << endl;
+                return false;
             }
 
             void print() //publichnaya abeortka dlya funkcii pechati
@@ -385,9 +418,11 @@ class Node
     {
         BST tree;
         int array1[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
-        for (int i = 0; i < sizeof(array1) / sizeof(array1[0]); ++i)
+        int i = 0; //logini hamar sksenq skzbic
+        int j = sizeof(array1) / sizeof(array1[0]) - 1; //paswordi hamar sksenq verjic
+        for (; i < sizeof(array1) / sizeof(array1[0]); ++i, --j)
         {
-            tree.add(array1[i]);
+            tree.add(array1[i], array1[j]);
         }
         /*
         BST tsar;
@@ -410,7 +445,12 @@ class Node
         //bool b = tree != tsar;
         //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
         //cout << endl;
-        tree.delValue(65);
+        //tree.delValue(65);
+        tree.print();
+        cout << "enter dhe user name ";
+        int usr;
+        cin >> usr;
+        bool u =tree.changePublic(usr);
         tree.print();
         //tree.find(9);
         
