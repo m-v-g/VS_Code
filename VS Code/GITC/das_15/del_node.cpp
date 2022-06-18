@@ -81,6 +81,7 @@ class Node
                 }
                 else if(l == temp->login)
                 {
+                    temp->password = p;
                     return false;
                 }
                 else if(l < temp->login) //ete x poqr e @ntaciqi valuic uremn kerdanq dzax
@@ -129,11 +130,7 @@ class Node
                 {
                     return true;
                 }
-                if(temp1->login != temp2->login) //ete loginer@ havasar chen
-                {
-                    return false;
-                }
-                if(temp1->login == temp2->login && temp1->password != temp2->password) //ete loginer@ havasar en bayc parolner@ havasar chen
+                if(temp1->login != temp2->login || temp1->password != temp2->password) //ete loginer@ havasar chen
                 {
                     return false;
                 }
@@ -225,11 +222,11 @@ class Node
 
 
         Node* delNode(Node* temp, int val) //TODO rekursivnaya funkciya udaleniya
-            //                      7
-            //                     / \
-            //                    3   9
-            //                   / \  /
-            //                  2   5 8
+        //                      7
+        //                     / \
+        //                    3   9
+        //                   / \  /
+        //                  2   5 8
             //                 /   / \
             //                1   4   6
             //                         \
@@ -447,11 +444,13 @@ class Node
         //cout << endl;
         //tree.delValue(65);
         tree.print();
-        cout << "enter dhe user name ";
-        int usr;
-        cin >> usr;
-        bool u =tree.changePublic(usr);
+        //cout << "enter dhe user name ";
+        //int usr;
+        //cin >> usr;
+        //bool u =tree.changePublic(usr);
+        tree.add(50, 5050);
         tree.print();
+        
         //tree.find(9);
         
         //cout << "find " << tree.find(9) << endl;
