@@ -7,13 +7,15 @@ class PriorityQueue
         class Node //class-i mej class sarqenq, LinkedLIst-i private sektorum mek e Node -in mainic chbdi sarkenq 
         {
             public: //Node -i memberner@ tox public exnin mek e mainic menq iranc chenq tesni
-                int value;  //arjeqi member
+                int login;  //arjeqi member
+                int password;
                 Node* prev; //ukazatel tipa Node
                 Node* next; //ukazatel tipa Node
                 
-                Node(int x) //Node-i konstruktor arjeq@ menq kudalq prev u next inq@ kveragre NULL
+                Node(int l, int p) //Node-i konstruktor arjeq@ menq kudalq prev u next inq@ kveragre NULL
                 {
-                    value = x;      //lyuboy Node ira mej kpahe ira arjeq@ 
+                    login = l;      //lyuboy Node ira mej kpahe ira arjeq@ 
+                    password = p;
                     prev = nullptr; //hajordi hascen defoltov NULL
                     next = nullptr; //naxordi hascen defoltov NULL
                 }
@@ -22,9 +24,9 @@ class PriorityQueue
         Node* tail = nullptr; //stexcenq Node(ukazatel tipi), tail anunov popoxakan inq@ bdi exni verjin uzeli hascen
         int listsQuantity = 0; //lister qanak@ hasvelu hamar
 
-        void push_back(int value) //hetevic grelu funkcia
+        void push_back(int l, int p) //hetevic grelu funkcia
         {
-            Node* temp = new Node(value); //stexcenq nor temp anunov Node* tesaki uzel
+            Node* temp = new Node(l, p); //stexcenq nor temp anunov Node* tesaki uzel
             if(head == nullptr)       //ete inq@ araji uzeln e
             {
                 head = temp; //mej@ NULL e vorovhetev konstruktor@ defoltov iran nullptr arjeq e tve
@@ -40,9 +42,9 @@ class PriorityQueue
             return;
         } //hetevic grelu funkciai verj
         
-        void push_front(int value) //demic grelu funkcia
+        void push_front(int l, int p) //demic grelu funkcia
         {
-            Node* temp = new Node(value); //stexcenq nor temp anunov Node* tesaki uzel
+            Node* temp = new Node(l, p); //stexcenq nor temp anunov Node* tesaki uzel
             if(head == nullptr)       //ete inq@ araji uzeln e
             {
                 head = temp;
@@ -57,7 +59,7 @@ class PriorityQueue
             ++ listsQuantity;
             return;
         } //demic grelu funkciai verj
-
+/*
         int pop_back(void) //hetevic jnjox funkcia
         {
             if(head == nullptr)
@@ -70,6 +72,7 @@ class PriorityQueue
                 Node* temp = tail; //stexcenq nor temp anunov Node* tesaki popoxakan u inq@ cuyc ta pochi vra 
                 tail = tail -> prev; //pochi mej@ pahenq ira arajva previ hascen
                 tail -> next = nullptr; //hmigva pochi next = NULL
+                delete temp;
                 -- listsQuantity;
                 return temp -> value; //temp arden mer listi het kap chuni bayc ira mej@ arjeq ka veradadznenq
             }
@@ -92,7 +95,7 @@ class PriorityQueue
                 return temp -> value; //temp arden mer listi het kap chuni bayc ira mej@ arjeq ka veradadznenq
             }
         } //demic jnjox funkciai verj
-        
+*/       
     public: 
         ~ PriorityQueue()
         {
@@ -112,39 +115,77 @@ class PriorityQueue
             Node* temp = head;        //sarqeq nor popoxakan vorpeszi hed@ chpchacnenq
             while(temp != nullptr)    //qani der tempi arjeq@ chi dare nullptr uremn hl@ chenq hase verj
             {
-                cout << temp -> value << "\t" << endl;
-                temp = temp -> next;  //temp-in veragrenq hajord uzel@
+                cout << temp->login << "\t" << temp->password << endl;
+                temp = temp->next;  //temp-in veragrenq hajord uzel@
             }
         } //tpelu funkciai verj
 
-        void add(int value)
+        void add(int l, int p)
         {
-            if(head == tail)
+            if(head == nullptr)
             {
-                push_back(value);
+                push_back(l, p);
             }
-            else if(value < head->value)
+            else if(l < head->login)
             {
-                push_front(value);
+                push_front(l, p);
             }
-            else if(value > tail->value)
+            else if(l > tail->login)
             {
-                push_back(value);
+                push_back(l, p);
             }
             else
             {
-                Node* temp = new Node(value); //stexcenq nor temp vori mej pahenq arjeq@
-                Node* iterator = head;        //mi hat el or list@ perebor enenq
-                while (iterator->value < value)
+                Node* temp = new Node(l, p); //stexcenq nor temp vori mej pahenq arjeq@
+                Node* iterator = tail;        //mi hat el or list@ perebor enenq
+                while (iterator->login > l)
                 {
-                    iterator = iterator -> next;
+                    iterator = iterator -> prev;
+                    if(l == iterator->login)
+                    {
+                        return;
+                    }
                 }
-                temp->next = iterator;
-                temp->prev = iterator->prev;
-                iterator->prev->next = temp;
-                iterator->prev = temp;
+                
+                temp->next = iterator->next;
+                temp->prev = iterator;
+                iterator->next->prev = temp;
+                iterator->next = temp;
                 ++ listsQuantity;
             }
+        }
+
+        void pop(int l, int p)
+        {
+            Node* iterator = head;        //mi hat el or list@ perebor enenq
+            if(l == head->login)
+            {
+                cout << "55555555555555555555" << endl;
+                head = head -> next;
+                head -> prev = nullptr;
+                delete iterator;
+                return;
+            }
+            if(l == tail->login)
+            {
+                iterator = tail;
+                tail = tail -> prev;
+                tail -> next = nullptr;
+                delete iterator;
+                return;
+            }
+            while (iterator->login != l)
+            {
+                if(iterator == tail)
+                {
+                    return;
+                }
+                iterator = iterator -> next;
+            }
+            iterator->next->prev = iterator->prev;
+            iterator->prev->next = iterator->next;
+            iterator->next = iterator->prev = nullptr;
+            delete iterator;
         }
         
 };
@@ -154,11 +195,20 @@ int main()
     PriorityQueue pq;
 
     int array[] = {10, 20, 30, 40, 50, 60, 70, 80, 90};
+    int j = 100;
     for (int i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
     {
-        pq.add(array[i]);
+        pq.add(array[i], j);
+        j += 100;
     }
     
-    pq.add(55);
+    pq.add(55, 9999);
+    pq.print();
+
+    int log = 55;
+    int pas = 9999;
+
+    pq.pop(log, pas);
+    cout << "============================" << endl;
     pq.print();
 }
