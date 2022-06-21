@@ -59,43 +59,7 @@ class PriorityQueue
             ++ listsQuantity;
             return;
         } //demic grelu funkciai verj
-/*
-        int pop_back(void) //hetevic jnjox funkcia
-        {
-            if(head == nullptr)
-            {
-                cout << "List is empty ";
-                return 0;
-            }
-            else
-            {
-                Node* temp = tail; //stexcenq nor temp anunov Node* tesaki popoxakan u inq@ cuyc ta pochi vra 
-                tail = tail -> prev; //pochi mej@ pahenq ira arajva previ hascen
-                tail -> next = nullptr; //hmigva pochi next = NULL
-                delete temp;
-                -- listsQuantity;
-                return temp -> value; //temp arden mer listi het kap chuni bayc ira mej@ arjeq ka veradadznenq
-            }
-            
-        } //hetevic jnjox funkciai verj
-        
-        int pop_front(void) //demic jnjox funkcia
-        {
-            if(head == nullptr)
-            {
-                cout << "List is empty ";
-                return 0;
-            }
-            else
-            {
-                Node* temp = head; //stexcenq nor temp anunov Node* tesaki popoxakan u inq@ cuyc ta pochi vra 
-                head = head -> next;  //glxi mej@ pahenq ira arajva nexti hascen
-                head -> prev = nullptr; //hmigva glxi prev = NULL
-                -- listsQuantity;
-                return temp -> value; //temp arden mer listi het kap chuni bayc ira mej@ arjeq ka veradadznenq
-            }
-        } //demic jnjox funkciai verj
-*/       
+           
     public: 
         ~ PriorityQueue()
         {
