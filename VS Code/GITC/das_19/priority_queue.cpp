@@ -123,15 +123,14 @@ class PriorityQueue
         Node pop(int l, int p)
         {
             Node* iterator = head;
-            Node* temp;
             if(l == head->login)
             {
                 head = head -> next;
                 head -> prev = nullptr;
                 -- listsQuantity;
-                temp = iterator;
+                Node temp(iterator->login, iterator->password);
                 delete iterator;
-                return *temp;
+                return temp;
             }
             if(l == tail->login)
             {
@@ -139,15 +138,16 @@ class PriorityQueue
                 tail = tail -> prev;
                 tail -> next = nullptr;
                 -- listsQuantity;
-                temp = iterator;
+                Node temp(iterator->login, iterator->password);
                 delete iterator;
-                return *temp;
+                return temp;
             }
             while (iterator->login != l)
             {
                 if(iterator == tail)
                 {
-                    return *temp;
+                    Node temp(-1, -1);
+                    return temp;
                 }
                 iterator = iterator -> next;
             }
@@ -155,9 +155,9 @@ class PriorityQueue
             iterator->prev->next = iterator->next;
             iterator->next = iterator->prev = nullptr;
             -- listsQuantity;
-            temp = iterator;
+            Node temp(iterator->login, iterator->password);
             delete iterator;
-            return *temp;
+            return temp;
         }
         
 };
