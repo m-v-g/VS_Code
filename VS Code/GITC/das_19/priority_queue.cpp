@@ -177,7 +177,7 @@ int main()
     pq.add(55, 9999);
     pq.print();
 
-    int log = 55;
+    int log = 100;
     int pas = 9999;
     Node temp = pq.pop(log, pas);
     //pq.pop(log, pas);
