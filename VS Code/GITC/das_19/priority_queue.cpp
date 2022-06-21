@@ -1,10 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class PriorityQueue
-{
-    private:
-        class Node //class-i mej class sarqenq, LinkedLIst-i private sektorum mek e Node -in mainic chbdi sarkenq 
+class Node //class-i mej class sarqenq, LinkedLIst-i private sektorum mek e Node -in mainic chbdi sarkenq 
         {
             public: //Node -i memberner@ tox public exnin mek e mainic menq iranc chenq tesni
                 int login;  //arjeqi member
@@ -19,11 +16,11 @@ class PriorityQueue
                     prev = nullptr; //hajordi hascen defoltov NULL
                     next = nullptr; //naxordi hascen defoltov NULL
                 }
-        };    
-        Node* head = nullptr; //stexcenq Node(ukazatel tipi), head anunov popoxakan inq@ bdi exni arajin uzeli hascen
-        Node* tail = nullptr; //stexcenq Node(ukazatel tipi), tail anunov popoxakan inq@ bdi exni verjin uzeli hascen
-        int listsQuantity = 0; //lister qanak@ hasvelu hamar
+        };
 
+class PriorityQueue
+{
+    private:    
         void push_back(int l, int p) //hetevic grelu funkcia
         {
             Node* temp = new Node(l, p); //stexcenq nor temp anunov Node* tesaki uzel
@@ -59,8 +56,12 @@ class PriorityQueue
             ++ listsQuantity;
             return;
         } //demic grelu funkciai verj
-           
-    public: 
+
+    public:
+        Node* head = nullptr; //stexcenq Node(ukazatel tipi), head anunov popoxakan inq@ bdi exni arajin uzeli hascen
+        Node* tail = nullptr; //stexcenq Node(ukazatel tipi), tail anunov popoxakan inq@ bdi exni verjin uzeli hascen
+        int listsQuantity = 0; //lister qanak@ hasvelu hamar
+
         ~ PriorityQueue()
         {
             if(head != nullptr) //ete inq@ datark e hech ban chenenq 
@@ -119,37 +120,44 @@ class PriorityQueue
             }
         }
 
-        void pop(int l, int p)
+        Node pop(int l, int p)
         {
-            Node* iterator = head;        //mi hat el or list@ perebor enenq
+            Node* iterator = head;
+            Node* temp;
             if(l == head->login)
             {
-                cout << "55555555555555555555" << endl;
                 head = head -> next;
                 head -> prev = nullptr;
+                -- listsQuantity;
+                temp = iterator;
                 delete iterator;
-                return;
+                return *temp;
             }
             if(l == tail->login)
             {
                 iterator = tail;
                 tail = tail -> prev;
                 tail -> next = nullptr;
+                -- listsQuantity;
+                temp = iterator;
                 delete iterator;
-                return;
+                return *temp;
             }
             while (iterator->login != l)
             {
                 if(iterator == tail)
                 {
-                    return;
+                    return *temp;
                 }
                 iterator = iterator -> next;
             }
             iterator->next->prev = iterator->prev;
             iterator->prev->next = iterator->next;
             iterator->next = iterator->prev = nullptr;
+            -- listsQuantity;
+            temp = iterator;
             delete iterator;
+            return *temp;
         }
         
 };
@@ -171,8 +179,9 @@ int main()
 
     int log = 55;
     int pas = 9999;
-
-    pq.pop(log, pas);
+    Node temp = pq.pop(log, pas);
+    //pq.pop(log, pas);
     cout << "============================" << endl;
+    cout << temp.login << "\t" << temp.password << endl << endl;
     pq.print();
 }
