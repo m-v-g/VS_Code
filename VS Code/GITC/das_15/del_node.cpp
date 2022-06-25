@@ -319,6 +319,14 @@ class Node
                 copyRec(temp);
             }
 
+            BST(BST&& other)
+            {
+                cout << "Vizvolsya konstruktor perenosa dlya obekta " << this << endl;
+                Node* temp = other.root;
+                copyRec(temp);
+                destroy(other.root);
+            }
+
             ~BST() //destruktor
             {
                 cout << "Vizvolsya destruktor dlya obekta " << this << endl;
@@ -443,13 +451,17 @@ class Node
         //cout << endl << b ? "YES\n" : "NO\n"; //ternarny operator
         //cout << endl;
         //tree.delValue(65);
-        tree.print();
+        //tree.print();
         //cout << "enter dhe user name ";
         //int usr;
         //cin >> usr;
         //bool u =tree.changePublic(usr);
-        tree.add(50, 5050);
+        //tree.add(50, 5050);
+        
+        BST tsar = std::move(tree);
         tree.print();
+        cout << "======================" << endl;
+        tsar.print();
         
         //tree.find(9);
         
