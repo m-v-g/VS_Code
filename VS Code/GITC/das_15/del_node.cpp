@@ -322,9 +322,10 @@ class Node
             BST(BST&& other)
             {
                 cout << "Vizvolsya konstruktor perenosa dlya obekta " << this << endl;
-                Node* temp = other.root;
-                copyRec(temp);
-                destroy(other.root);
+                this->root = other.root;
+                this->leavesAmount = other.leavesAmount;
+                other.leavesAmount = 0;
+                other.root = nullptr;
             }
 
             ~BST() //destruktor
@@ -415,6 +416,21 @@ class Node
                 copyRec(temp);
                 return *this;   
             }
+
+            BST& operator= (BST&& other) //operator prisvoivoniya
+            {
+                //cout << "this root value: " << this->root->value << endl;
+                if(root)
+                {
+                    destroy(root);
+                }
+                cout << "Vizvolsya konstruktor perenosa dlya obekta " << this << endl;
+                this->root = other.root;
+                this->leavesAmount = other.leavesAmount;
+                other.leavesAmount = 0;
+                other.root = nullptr;
+                return *this;   
+            }
             
     
     };
@@ -458,7 +474,9 @@ class Node
         //bool u =tree.changePublic(usr);
         //tree.add(50, 5050);
         
-        BST tsar = std::move(tree);
+        //BST tsar = std::move(tree);
+        BST tsar;
+        tsar = std::move(tree);
         tree.print();
         cout << "======================" << endl;
         tsar.print();
