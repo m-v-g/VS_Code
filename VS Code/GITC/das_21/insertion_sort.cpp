@@ -96,21 +96,35 @@ class Queue
             Node* temp = head->next;        //sarqeq nor popoxakan vorpeszi hed@ chpchacnenq
             while(temp != nullptr)    //qani der tempi arjeq@ chi dare nullptr uremn hl@ chenq hase verj
             {
-                if(temp->value < temp->prev->value)
+                if(temp->value < temp->prev->value) //ete naxordic mec e
                 {
-                    cout << "11111111111111" << endl;
-                    if(temp->value < head->value)
+                    if(temp->value < head->value) //ete headic poqr e
                     {
-                        cout << "22222222222" << endl;
-                        temp->prev->next = temp->next;
-                        temp->next->prev = temp->prev;
-                        temp->next = temp->prev;
-                        temp->prev = nullptr;
-                        head = temp;
-                        return;
+                        temp->prev->next = temp->next; //
+                        temp->next->prev = temp->prev; //pokecinq obshu cucakic
+
+                        temp->next = head;    //
+                        temp->prev = nullptr; //
+                        head->prev = temp;    //texadrenq dem@
+                        
+                        head = temp;  //inqn e arden head@
                     }
-                    Node* iterator = head;
-                    cout << "============" << endl;
+                    else
+                    {
+                        Node* iterator = head;
+                        while(iterator->value < temp->value && iterator->next != tail)
+                        {
+                            iterator = iterator->next;
+                        }
+                        cout << "============" << iterator->value << endl;
+                        temp->prev->next = temp->next; //
+                        temp->next->prev = temp->prev; //pokecinq obshu cucakic
+
+                        temp->next = iterator;       //
+                        temp->prev = iterator->prev; //
+                        iterator->prev->next = temp; //
+                        iterator->prev = temp;       // xckenq iteratoric heto
+                    }
                 }
                 temp = temp->next;
             } 
