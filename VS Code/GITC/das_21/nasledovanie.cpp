@@ -21,7 +21,7 @@ class Person
             this->age = a;
         }
 
-        void print(void)
+        virtual void print(void)
         {
             cout << "===Person===" << endl;
             cout << "NAME:\t" << name << endl;
@@ -165,13 +165,16 @@ int main()
     bjishk.sity = "xapan";
     bjishk.blabla = -10;
     bjishk.heart = 99;
-    bjishk.print();
+    //bjishk.print();
 
     //Person mard("anun", "azganun", 20);
     //Specialist ellips("Vasil", "Mkrtchyan", 40, 0, 2);
     //Medic asd("asd", "dsa", 5, 0, 9, "qwerty");
     //Surgeon asd("asd", "dsa", 5, 0, 9, "qwerty", -12);
-    Cardio asd("asd", "dsa", 5, 0, 9, "qwerty", -12, "ewq");
+    //Cardio asd("asd", "dsa", 5, 0, 9, "qwerty", -12, "ewq");
+
+    Person* ptr = &bjishk;
+    ptr->print();
 
     return 0;
 }

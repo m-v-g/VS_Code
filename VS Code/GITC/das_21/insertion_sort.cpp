@@ -116,7 +116,6 @@ class Queue
                         {
                             iterator = iterator->next;
                         }
-                        cout << "============" << iterator->value << endl;
                         if(temp == tail)
                         {
                             temp->prev->next = nullptr; //
@@ -151,5 +150,7 @@ int main()
     hert.print();
     hert.sort();
     hert.print();
+
+
     return 0;
 }
