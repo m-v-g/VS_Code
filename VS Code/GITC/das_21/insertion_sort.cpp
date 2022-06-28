@@ -117,8 +117,16 @@ class Queue
                             iterator = iterator->next;
                         }
                         cout << "============" << iterator->value << endl;
-                        temp->prev->next = temp->next; //
-                        temp->next->prev = temp->prev; //pokecinq obshu cucakic
+                        if(temp == tail)
+                        {
+                            temp->prev->next = nullptr; //
+                            temp->prev = tail;          //pokecinq obshii pochic cucakic
+                        }
+                        else
+                        {
+                            temp->prev->next = temp->next; //
+                            temp->next->prev = temp->prev; //pokecinq obshi cucakic
+                        }
 
                         temp->next = iterator;       //
                         temp->prev = iterator->prev; //
