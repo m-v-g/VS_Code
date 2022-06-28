@@ -96,24 +96,23 @@ class Queue
             Node* temp = head->next;        //sarqeq nor popoxakan vorpeszi hed@ chpchacnenq
             while(temp != nullptr)    //qani der tempi arjeq@ chi dare nullptr uremn hl@ chenq hase verj
             {
-                if(temp->value < head->value)
+                if(temp->value < temp->prev->value)
                 {
-                    temp->prev->next = temp->next;
-                    temp->next->prev = temp->prev;
-                    temp->next = temp->prev;
-                    temp->prev = nullptr;
-                    head = temp;
-                    return;
+                    cout << "11111111111111" << endl;
+                    if(temp->value < head->value)
+                    {
+                        cout << "22222222222" << endl;
+                        temp->prev->next = temp->next;
+                        temp->next->prev = temp->prev;
+                        temp->next = temp->prev;
+                        temp->prev = nullptr;
+                        head = temp;
+                        return;
+                    }
+                    Node* iterator = head;
+                    cout << "============" << endl;
                 }
-                else if(temp->value > tail->value)
-                {
-                    temp->next->prev = temp->prev;
-                    temp->prev->next = temp->next;
-                    temp->prev = temp->next;
-                    temp->next = nullptr;
-                    tail = temp;
-                    return;
-                }
+                temp = temp->next;
             } 
         }
 };
@@ -121,12 +120,13 @@ class Queue
 int main()
 {
     Queue hert;
-    //int array[] = {5, 3, 9, 7, 8, 1, 2, 6, 4};
-    int array[] = {5, 9, 7};
+    int array[] = {5, 3, 9, 7, 8, 1, 2, 6, 4};
+    //int array[] = {5, 9, 7};
     for (int i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
     {
         hert.push(array[i]);
     }
+    hert.print();
     hert.sort();
     hert.print();
     return 0;
