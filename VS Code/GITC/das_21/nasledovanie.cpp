@@ -21,8 +21,9 @@ class Person
             this->age = a;
         }
 
-        virtual void print(void)
-        {
+        virtual void print(void) //minchev virtual bar@ grel@ inq@ chider or urish memberner el kan
+        {                        //ktper es 3 hat@ bayc hmi ktpe sax
+                                 //arden gite or iranic baci urish printner kan
             cout << "===Person===" << endl;
             cout << "NAME:\t" << name << endl;
             cout << "SUR:\t" << surname << endl;
@@ -172,6 +173,9 @@ int main()
     //Medic asd("asd", "dsa", 5, 0, 9, "qwerty");
     //Surgeon asd("asd", "dsa", 5, 0, 9, "qwerty", -12);
     //Cardio asd("asd", "dsa", 5, 0, 9, "qwerty", -12, "ewq");
+
+    Specialist* sptr = &bjishk;
+    sptr->print();
 
     Person* ptr = &bjishk;
     ptr->print();
