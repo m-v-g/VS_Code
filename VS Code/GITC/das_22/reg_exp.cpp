@@ -7,10 +7,11 @@ using namespace std;
 int main()
 {
     regex hamaranisher("([0-9]{2}[A-Z]{2}[0-9]{3})|([0-9]{3}[A-Z]{2}[0-9]{2})"); //haykakan hamaranisheri shablon
-    regex sayter("([A-Za-z_\\-]{2,50})?_?((news)|(News)){1,}\\.am"); //haykakan sayter
-    regex heraxos("(\\+374|0)[0-9]{2} [0-9]{2}(-| )?[0-9]{2}(-| )?[0-9]{2}");
-    regex anun("( {1,}[A-Z][a-z]{3,} [A-Z][a-z]{3,}(ian|yan|iants|yants|uni))"
-               "|( {1,}[A-Z][a-z]{3,}(ian|yan|iants|yants|uni) [A-Z][a-z]{3,})");
+    //regex sayter("([A-Za-z_\\-]{2,50})?_?((news)|(News)){1,}\\.am"); //haykakan sayter
+    regex sayter("([A-Za-z_\\-]{2,50})?_?(news){1,}\\.am", regex_constants::icase); //2rd parametr or hasvi charni registr@
+    regex heraxos("(\\+374|0)[0-9]{2}\\s[0-9]{2}(-|\\s)?[0-9]{2}(-|\\s)?[0-9]{2}");
+    regex anun("(\\<([A-Z][a-z]{3,})\\>\\s[A-Z][a-z]{3,}(ian|yan|iants|yants|uni))"
+               "|(\\<([A-Z][a-z]{3,}(ian|yan|iants|yants|uni))\\>\\s[A-Z][a-z]{3,})");
     regex date ("((0[0-9])|(1[0-9])|(2[0-9])|(3[01]))(\\.|\\-|/| )"
                 "((0[0-9])|(1[012]))(\\.|\\-|/| )"
                 "((19[7-9][0-9])|(20[0-9][0-9])) "
