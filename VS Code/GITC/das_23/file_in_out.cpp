@@ -20,7 +20,7 @@ int main()
         exit(EXIT_FAILURE);
     }
     ofstream fout;            //sozdanie obekta dlya vivoda
-    fout.open("ip_parsed.txt", ios::app); //asocaciya ego s faylom
+    fout.open("ip_parsed.txt", ios::app); //asocaciya ego s faylom (append enenq)
     
     regex ipv4 ("\\b(([0-9]|([1-9][0-9])|((1[0-9]{2})|(2[0-4][0-9])|(25[0-5])))\\.){3}"
                 "([0-9]|([1-9][0-9])|((1[0-9]{2})|(2[0-4][0-9])|(25[0-5])))\\b");
