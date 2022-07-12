@@ -6,7 +6,8 @@
     "xstring": "cpp",
     "xiosbase": "cpp",
     "fstream": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "string": "cpp"
   },
   "C_Cpp.errorSquiggles": "Enabled",
   "C_Cpp_Runner.cCompilerPath": "gcc",

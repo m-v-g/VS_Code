@@ -408,7 +408,7 @@ class Node
         BST tree;
         int d;
         int array1[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
-        new int array[d];
+        //new int array1[d];
         for (int i = 0; i < sizeof(array1) / sizeof(array1[0]); ++i)
         {
             tree.add(array1[i]);
