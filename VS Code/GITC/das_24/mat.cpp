@@ -5,7 +5,7 @@ using namespace std;
 class Mathematic
 {
 public:
-    static int pi;
+    static const float pi;
     static float triangle(int a, int h)
     {
         return a * h / 2;
@@ -20,7 +20,7 @@ public:
     }
 };
 
-int Mathematic::pi = 3.14;
+int const Mathematic::pi = 3.14;
 
 int main()
 {
