@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "c:/Users/SS_Admin/Dropbox/Visual Studio/VS Code/GITC/das_22",
-      "program": "c:/Users/SS_Admin/Dropbox/Visual Studio/VS Code/GITC/das_22/build/Debug/outDebug",
+      "cwd": "c:/Users/SS_Admin/Dropbox/Visual Studio/VS Code/GITC/das_28",
+      "program": "c:/Users/SS_Admin/Dropbox/Visual Studio/VS Code/GITC/das_28/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
