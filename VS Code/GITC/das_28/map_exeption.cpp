@@ -2,31 +2,29 @@
 #include <ctime>
 using namespace std;
 
+template<class Type1, class Type2>
+class Node
+{
+    public:
+        Type1 kay;
+        Type2 val;
+        int index = 0;
+        Node* prev;
+        Node* next;
 
+        Node(Type1 k, Type2 v)
+        {
+            kay = k;
+            val = v;
+            prev = nullptr;
+            next = nullptr;
+        }
+};
 
 template<class type1, class type2>
 class Stack
 {
-    private:  
-        template<class Type1, class Type2>
-        class Node
-        {
-            public:
-                Type1 kay;
-                Type2 val;
-                int index = 0;
-                Node* prev;
-                Node* next;
-
-                Node(Type1 k, Type2 v)
-                {
-                    kay = k;
-                    val = v;
-                    prev = nullptr;
-                    next = nullptr;
-                }
-            };
-
+    private:
         Node<type1, type2>* head = nullptr;
         Node<type1, type2>* tail = nullptr;
         int userQuantity = 0;
@@ -60,10 +58,10 @@ class Stack
                 cout << endl << endl;
         }
 
-        void push (int kay, int val)
+        void push (type1 kay, type2 val)
         {
-            //Node<type1, type2>* temp = new Node(kay, val);
-            auto temp = new Node(kay, val);
+            //Node<type1, type2>* temp = new Node<type1, type2>(kay, val);
+            auto temp = new Node<type1, type2>(kay, val);
 
             if(head == nullptr)
             {
@@ -90,7 +88,24 @@ class Stack
             return;
         }
 
-        bool find (int kayCopy)
+        Node<type1, type2> pop()
+        {
+            if(head == nullptr)
+            {
+                cout << "List is empty ";
+                throw 404;
+            }
+            else
+            {
+                auto temp = *head;
+                head = head->next;
+                head->prev = nullptr;
+                -- userQuantity;
+                return temp;
+            }
+        }
+
+        bool find (type1 kayCopy)
         {
             //Node<type1, type2>* temp = head;
             auto temp = head;
@@ -131,11 +146,18 @@ class Stack
 
 int main()
 {
-    Stack<int, int> vkontakte;
-    vkontakte.push(55, 5);
-    vkontakte.push(66, 6);
-    vkontakte.push(77, 7);
-    vkontakte.push(77, 8);
-    vkontakte.print();
+    Stack<int, int> vk;
+    vk.push(55, 5);
+    vk.push(66, 6);
+    vk.push(77, 7);
+    vk.push(77, 8);
+    vk.print();
+    Stack<string, string> ok;
+    ok.push("asd", "123");
+    ok.print();
+
+    auto t = ok.pop();
+    cout << t->kay << endl;
+    cout << t->val << endl;
     return 0;
 }
