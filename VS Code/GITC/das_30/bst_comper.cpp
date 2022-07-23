@@ -6,27 +6,27 @@ class Node
     {
         public:
             Type1 value;
-            Node* left;
-            Node* right;
-            Node* parent;
+            Node<Type1>* left;
+            Node<Type1>* right;
+            Node<Type1>* parent;
                 
             Node(Type1 value) //nor terev stexcelu konstruktor
             {
                 this->value = value;
-                Node<Type1>* left = nullptr;
-                Node<Type1>* right = nullptr;
-                Node<Type1>* parent =nullptr;
+                left = nullptr;
+                right = nullptr;
+                parent =nullptr;
             }
     }; 
 
-    template <class Type1>
+    template <class TypeA>
     class BST //binarnoe derevo poiska
     {
         private:
-            Node<Type1>* root = nullptr;
+            Node<TypeA>* root = nullptr;
             int leavesAmount = 0;
 
-            void print(Node<Type1>* temp) //rekursivnaya funkciya pechati
+            void print(Node<TypeA>* temp) //rekursivnaya funkciya pechati
             {
                 if(!temp)
                 {
@@ -37,7 +37,7 @@ class Node
                 print(temp->right);
             }
 
-            void destroy(Node<Type1>* &temp) //rekursivnaya funkciya unichtojeniya
+            void destroy(Node<TypeA>* &temp) //rekursivnaya funkciya unichtojeniya
             {
                 if(!temp)
                 {
@@ -52,12 +52,12 @@ class Node
                 temp = nullptr;
             }
 
-            bool add(int x, Node<Type1>* &temp) //peredayom ne ukazatel a ssilku na etot ukazatel
+            bool add(int x, Node<TypeA>* &temp) //peredayom ne ukazatel a ssilku na etot ukazatel
             {
                 if(!temp) //ete khandipenq zroyakan ukazatel
                 {
                     ++ leavesAmount;
-                    temp = new Node(x);
+                    temp = new Node<TypeA>(x);
                     return true;
                 }
                 else if(x == temp->value)
@@ -78,7 +78,7 @@ class Node
                 }
             }
 
-            Node<Type1>* find(Node<Type1>* temp, int copyX) //rekursivnaya funkciya poiska
+            Node<TypeA>* find(Node<TypeA>* temp, int copyX) //rekursivnaya funkciya poiska
             {
                 if(!temp)
                 {
@@ -100,7 +100,7 @@ class Node
                 return nullptr;
             }
 
-            bool compare(Node<Type1>* temp1, Node<Type1>* temp2) //rekursivnaya funkciya sravneniya
+            bool compare(Node<TypeA>* temp1, Node<TypeA>* temp2) //rekursivnaya funkciya sravneniya
             {
                 if((temp1 && !temp2) || (!temp1 && temp2))
                 {
@@ -120,7 +120,7 @@ class Node
                 return l && r;
             }
 
-             void copyRec(const Node<Type1>* temp) //rekursivnaya funkciya kopirovaniya
+             void copyRec(const Node<TypeA>* temp) //rekursivnaya funkciya kopirovaniya
             {
                 if(temp)
                 {
@@ -130,7 +130,7 @@ class Node
                 }
             }
 
-            bool delNodeParent(Node<Type1>* temp, int val) //funkciya udaleniya
+            bool delNodeParent(Node<TypeA>* temp, int val) //funkciya udaleniya
             //                      7
             //                     / \
             //                    3   9
@@ -180,7 +180,7 @@ class Node
                 else if(temp->left != nullptr && temp->right != nullptr) //ete uni ham aj ham dzax terevner
                 { //uremn gtnenq @ntacikic meceric amenapoqr@
                     cout << "armat e 2 cyuxov" << endl;
-                    Node<Type1>* minimal = temp->right; //erdanq aj gtnenq edtexac amena dzax@
+                    Node<TypeA>* minimal = temp->right; //erdanq aj gtnenq edtexac amena dzax@
                     while(minimal->left) //dzax koxmov ijninq minchev verj
                     {
                         minimal = minimal->left;
@@ -207,7 +207,7 @@ class Node
             }        
 
 
-        Node<Type1>* delNode(Node<Type1>* temp, int val) // rekursivnaya funkciya udaleniya
+        Node<TypeA>* delNode(Node<TypeA>* temp, int val) // rekursivnaya funkciya udaleniya
             //                      7
             //                     / \
             //                    3   9
@@ -224,14 +224,14 @@ class Node
                 }
                 if(val == temp->value) //ete gtel enq
                 {
-                    Node<Type1>* tmp; //stexcenq or krnananq erdanq araj
+                    Node<TypeA>* tmp; //stexcenq or krnananq erdanq araj
                     if(!temp->right) //ete chuni aj terev
                     {
                         tmp = temp->left; //zaglushka
                     }
                     else //ete uni aj terev
                     {
-                        Node<Type1>* ptr = temp->right; //jamanakavor popoxaan sarqenq u ira mej pahenq aj terevin
+                        Node<TypeA>* ptr = temp->right; //jamanakavor popoxaan sarqenq u ira mej pahenq aj terevin
                         if(!ptr->left) //ete ed aj@ dzax chuni
                         {
                             ptr->left = temp->left; //or hankarc dzax chyux@ chkorcnenq
@@ -240,7 +240,7 @@ class Node
                         else //ete vseotaki uni
                         {
                             
-                            Node<Type1>* minimal = ptr->left;
+                            Node<TypeA>* minimal = ptr->left;
                             
                             while(minimal->left) //ijnenq dzaxov minchev verj
                             { //ptr misht me qaylm het kexni minimalic (parent)
@@ -287,7 +287,7 @@ class Node
 
             BST(BST& other) //konstruktor kopirovaniya
             {
-                Node<Type1>* temp = other.root;
+                Node<TypeA>* temp = other.root;
                 copyRec(temp);
             }
 
@@ -355,7 +355,7 @@ class Node
                 {
                     destroy(root);
                 }
-                Node<Type1>* temp = other.root;
+                Node<TypeA>* temp = other.root;
                 copyRec(temp);
                 return *this;   
             }
