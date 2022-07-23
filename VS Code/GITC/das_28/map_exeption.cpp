@@ -146,18 +146,24 @@ class Stack
 
 int main()
 {
-    Stack<int, int> vk;
-    vk.push(55, 5);
-    vk.push(66, 6);
-    vk.push(77, 7);
-    vk.push(77, 8);
-    vk.print();
-    Stack<string, string> ok;
-    ok.push("asd", "123");
-    ok.print();
+    try{
+        Stack<int, int> vk;
+        vk.push(55, 5);
+        vk.push(66, 6);
+        vk.push(77, 7);
+        vk.push(77, 8);
+        vk.print();
+        Stack<string, string> ok;
+        ok.push("asd", "123");
+        ok.print();
 
-    auto t = ok.pop();
-    cout << t->kay << endl;
-    cout << t->val << endl;
+        auto t = vk.pop();
+        cout << t->kay << endl;
+        cout << t->val << endl;
+    }
+    catch{
+
+    }
+
     return 0;
 }
