@@ -1,32 +1,38 @@
 #include <iostream>
 using namespace std;
 
-template <class Type1>
-class Node
+template <class Type1, class Type2, class Type3, class Type4>
+class Spec
     {
         public:
-            Type1 value;
+            Type1 name;
+            Type2 surname;
+            Type3 age;
+            Type4 iq;
             Node<Type1>* left;
             Node<Type1>* right;
             Node<Type1>* parent;
                 
-            Node(Type1 value) //nor terev stexcelu konstruktor
+            Node(Type1 name, Type2 surname, Type3 age, Type4 iq) //nor terev stexcelu konstruktor
             {
-                this->value = value;
+                this->name = name;
+                this->surname = surname;
+                this->age = age;
+                this->iq = iq;
                 left = nullptr;
                 right = nullptr;
                 parent =nullptr;
             }
     }; 
 
-    template <class TypeA>
+    template <class TypeN, class TypeS, class TypeA, class TypeI>
     class BST //binarnoe derevo poiska
     {
         private:
-            Node<TypeA>* root = nullptr;
+            Node<class TypeN, class TypeS, class TypeA, class TypeI>* root = nullptr;
             int leavesAmount = 0;
 
-            void print(Node<TypeA>* temp) //rekursivnaya funkciya pechati
+            void print(auto temp) //rekursivnaya funkciya pechati
             {
                 if(!temp)
                 {
@@ -37,7 +43,7 @@ class Node
                 print(temp->right);
             }
 
-            void destroy(Node<TypeA>* &temp) //rekursivnaya funkciya unichtojeniya
+            void destroy(auto &temp) //rekursivnaya funkciya unichtojeniya
             {
                 if(!temp)
                 {
@@ -52,12 +58,12 @@ class Node
                 temp = nullptr;
             }
 
-            bool add(int x, Node<TypeA>* &temp) //peredayom ne ukazatel a ssilku na etot ukazatel
+            bool add(int x, auto &temp) //peredayom ne ukazatel a ssilku na etot ukazatel
             {
                 if(!temp) //ete khandipenq zroyakan ukazatel
                 {
                     ++ leavesAmount;
-                    temp = new Node<TypeA>(x);
+                    temp = new auto(x);
                     return true;
                 }
                 else if(x == temp->value)
@@ -78,7 +84,7 @@ class Node
                 }
             }
 
-            Node<TypeA>* find(Node<TypeA>* temp, int copyX) //rekursivnaya funkciya poiska
+            auto find(auto temp, int copyX) //rekursivnaya funkciya poiska
             {
                 if(!temp)
                 {
@@ -100,7 +106,7 @@ class Node
                 return nullptr;
             }
 
-            bool compare(Node<TypeA>* temp1, Node<TypeA>* temp2) //rekursivnaya funkciya sravneniya
+            bool compare(auto temp1, auto temp2) //rekursivnaya funkciya sravneniya
             {
                 if((temp1 && !temp2) || (!temp1 && temp2))
                 {
@@ -120,7 +126,7 @@ class Node
                 return l && r;
             }
 
-             void copyRec(const Node<TypeA>* temp) //rekursivnaya funkciya kopirovaniya
+             void copyRec(const auto temp) //rekursivnaya funkciya kopirovaniya
             {
                 if(temp)
                 {
@@ -130,7 +136,7 @@ class Node
                 }
             }
 
-            bool delNodeParent(Node<TypeA>* temp, int val) //funkciya udaleniya
+            bool delNodeParent(auto temp, int val) //funkciya udaleniya
             //                      7
             //                     / \
             //                    3   9
@@ -180,7 +186,7 @@ class Node
                 else if(temp->left != nullptr && temp->right != nullptr) //ete uni ham aj ham dzax terevner
                 { //uremn gtnenq @ntacikic meceric amenapoqr@
                     cout << "armat e 2 cyuxov" << endl;
-                    Node<TypeA>* minimal = temp->right; //erdanq aj gtnenq edtexac amena dzax@
+                    auto minimal = temp->right; //erdanq aj gtnenq edtexac amena dzax@
                     while(minimal->left) //dzax koxmov ijninq minchev verj
                     {
                         minimal = minimal->left;
@@ -207,7 +213,7 @@ class Node
             }        
 
 
-        Node<TypeA>* delNode(Node<TypeA>* temp, int val) // rekursivnaya funkciya udaleniya
+        auto delNode(auto temp, int val) // rekursivnaya funkciya udaleniya
             //                      7
             //                     / \
             //                    3   9
@@ -224,14 +230,14 @@ class Node
                 }
                 if(val == temp->value) //ete gtel enq
                 {
-                    Node<TypeA>* tmp; //stexcenq or krnananq erdanq araj
+                    auto tmp; //stexcenq or krnananq erdanq araj
                     if(!temp->right) //ete chuni aj terev
                     {
                         tmp = temp->left; //zaglushka
                     }
                     else //ete uni aj terev
                     {
-                        Node<TypeA>* ptr = temp->right; //jamanakavor popoxaan sarqenq u ira mej pahenq aj terevin
+                        auto ptr = temp->right; //jamanakavor popoxaan sarqenq u ira mej pahenq aj terevin
                         if(!ptr->left) //ete ed aj@ dzax chuni
                         {
                             ptr->left = temp->left; //or hankarc dzax chyux@ chkorcnenq
@@ -240,7 +246,7 @@ class Node
                         else //ete vseotaki uni
                         {
                             
-                            Node<TypeA>* minimal = ptr->left;
+                            auto minimal = ptr->left;
                             
                             while(minimal->left) //ijnenq dzaxov minchev verj
                             { //ptr misht me qaylm het kexni minimalic (parent)
@@ -287,7 +293,7 @@ class Node
 
             BST(BST& other) //konstruktor kopirovaniya
             {
-                Node<TypeA>* temp = other.root;
+                auto temp = other.root;
                 copyRec(temp);
             }
 
@@ -355,7 +361,7 @@ class Node
                 {
                     destroy(root);
                 }
-                Node<TypeA>* temp = other.root;
+                autotemp = other.root;
                 copyRec(temp);
                 return *this;   
             }
@@ -365,15 +371,19 @@ class Node
 
     int main()
     {
-        BST<int> tree;
-        int array1[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
-        for (int i = 0; i < sizeof(array1) / sizeof(array1[0]); ++i)
+        BST<char, char, int, float> tree;
+
+        char arrayN[] = {'G', 'C', 'B', 'A', 'I', 'E', 'D', 'F', 'H', '?'};
+        char arrayS[] = {'g', 'c', 'b', 'a', 'i', 'e', 'd', 'f', 'h', '!'};
+        int arrayA[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
+        float arrayI[] = {0.7, 0.3, 0.2, 0.1, 0.9, 0.5, 0.4, 0.6, 0.8, 0.65};
+        for (int i = 0; i < sizeof(arrayA) / sizeof(arrayA[0]); ++i)
         {
-            tree.add(array1[i]);
+            tree.add(arrayN[i], arrayS[i], arrayA[i], arrayI[i]);
         }
-        tree.add(65);
-        tree.delValue(65);
-        tree.print();
+        //tree.add(65);
+        //tree.delValue(65);
+        //tree.print();
  
         return 0;
     }
