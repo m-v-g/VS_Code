@@ -59,7 +59,7 @@ class SortByA : public Comparator<Rectangle> //
             {
                 return 1;
             }
-            else if(patkerA.a < patkerA.a)
+            else if(patkerA.a < patkerB.a)
             {
                 return -1;
             }
@@ -79,7 +79,7 @@ class SortByB : public Comparator<Rectangle> //
             {
                 return 1;
             }
-            else if(patkerA.b < patkerA.b)
+            else if(patkerA.b < patkerB.b)
             {
                 return -1;
             }
@@ -99,7 +99,7 @@ class SortByArea : public Comparator<Rectangle> //
             {
                 return 1;
             }
-            else if(patkerA.area < patkerA.area)
+            else if(patkerA.area < patkerB.area)
             {
                 return -1;
             }
@@ -119,7 +119,7 @@ class SortByPerimetr : public Comparator<Rectangle> //
             {
                 return 1;
             }
-            else if(patkerA.perimetr < patkerA.perimetr)
+            else if(patkerA.perimetr < patkerB.perimetr)
             {
                 return -1;
             }
@@ -318,8 +318,8 @@ class Node
                 else if(comparator->hamematel(x, temp->value) == 0)
                 //else if(x == temp->value)
                 {
-                    //bool ret = add(x, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
-                    //temp->right->parent = temp; //kanchic het galuc heto 
+                    bool ret = add(x, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
+                    temp->right->parent = temp; //kanchic het galuc heto 
                     return false;
                 }
                 else if(comparator->hamematel(x, temp->value) == -1)
@@ -565,7 +565,7 @@ class Node
                 this->comparator = ptr;
             }
 
-            BST(BST& other) //konstruktor kopirovaniya
+            BST(BST<TypeA>& other) //konstruktor kopirovaniya
             {
                 cout << "Vizvolsya konstruktor kopirovaniya dlya obekta " << this << endl;
                 Node<TypeA>* temp = other.root;
@@ -615,7 +615,7 @@ class Node
                 delNode(root, x);
             }
 
-            bool operator== (BST& other) //operator sravneniya
+            bool operator== (BST<TypeA>& other) //operator sravneniya
             {      
                 //cout << "Vizvolsya operator sravneniya dlya obekta " << this->root << endl;
                 //cout << "Vizvolsya operator sravneniya dlya obekta " << other.root << endl;
@@ -631,12 +631,12 @@ class Node
                 return compare(root, other.root);
             }
 
-            bool operator!= (BST& other) //operator sravneniya
+            bool operator!= (BST<TypeA>& other) //operator sravneniya
             {      
                 return !compare(root, other.root);
             }
             
-            BST& operator= (const BST& other) //operator prisvoivoniya
+            BST<TypeA>& operator= (const BST<TypeA>& other) //operator prisvoivoniya
             {
                 //cout << "this root value: " << this->root->value << endl;
                 if(root)
@@ -683,10 +683,12 @@ class Node
         int j = sizeof(arrayA) / sizeof(arrayA[0]) - 1;
         for (int i = 0; i < sizeof(arrayA) / sizeof(arrayA[0]); ++i)
         {
-            derevo.add(Rectangle(arrayA[i], 10));
+            derevo.add(Rectangle(arrayA[i], arrayA[j]));
             --j;
         }
         derevo.print();
+
+        
 
         return 0;
     }
