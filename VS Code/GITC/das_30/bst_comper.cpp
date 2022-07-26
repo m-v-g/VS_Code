@@ -1,6 +1,17 @@
 #include <iostream>
 using namespace std;
 
+
+template <class TypeC>
+class Comparator
+{
+    public:
+        virtual int hamematel(TypeC a, TypeC b) //or es hamematel@ chkanchvi
+        {
+            return 111;
+        }
+};
+
 class Rectangle
 {
     public:
@@ -17,6 +28,105 @@ class Rectangle
             this->b = b;
             area = a * b;
             perimetr = 2 * a + 2 * b;
+        }
+
+        void print()
+        {
+            cout << "---------------" << endl;
+            cout << a << endl;
+            cout << b << endl;
+            cout << area << endl;
+            cout << perimetr << endl;
+        }
+
+        friend ostream& operator<<(ostream& tpel, const Rectangle rec)
+        {
+            cout << "==============" << endl;
+            tpel << "Rect a:\t" << rec.a << endl;
+            tpel << "Rect b:\t" << rec.b << endl;
+            tpel << "Rect area:\t" << rec.area << endl;
+            tpel << "Rect perimetr:\t" << rec.perimetr << endl;
+            return tpel;
+        }
+};
+
+class SortByA : public Comparator<Rectangle> //
+{
+    public:
+        int hamematel(Rectangle patkerA, Rectangle patkerB)
+        {
+            if(patkerA.a > patkerB.a)
+            {
+                return 1;
+            }
+            else if(patkerA.a < patkerA.a)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+};
+
+class SortByB : public Comparator<Rectangle> //
+{
+    public:
+        int hamematel(Rectangle patkerA, Rectangle patkerB)
+        {
+            if(patkerA.b > patkerB.b)
+            {
+                return 1;
+            }
+            else if(patkerA.b < patkerA.b)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+};
+
+class SortByArea : public Comparator<Rectangle> //
+{
+    public:
+        int hamematel(Rectangle patkerA, Rectangle patkerB)
+        {
+            if(patkerA.area > patkerB.area)
+            {
+                return 1;
+            }
+            else if(patkerA.area < patkerA.area)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+};
+
+class SortByPerimetr : public Comparator<Rectangle> //
+{
+    public:
+        int hamematel(Rectangle patkerA, Rectangle patkerB)
+        {
+            if(patkerA.perimetr > patkerB.perimetr)
+            {
+                return 1;
+            }
+            else if(patkerA.perimetr < patkerA.perimetr)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
 };
 
@@ -58,15 +168,6 @@ class Specialist
         }
 };
 
-template <class TypeC>
-class Comparator
-{
-    public:
-        virtual int hamematel(TypeC a, TypeC b) //or es hamematel@ chkanchvi
-        {
-            return 111;
-        }
-};
 
 
 
@@ -217,6 +318,8 @@ class Node
                 else if(comparator->hamematel(x, temp->value) == 0)
                 //else if(x == temp->value)
                 {
+                    //bool ret = add(x, temp->right); //rekursiv kanchenq es funkcian bayc arden @ntacikic aj
+                    //temp->right->parent = temp; //kanchic het galuc heto 
                     return false;
                 }
                 else if(comparator->hamematel(x, temp->value) == -1)
@@ -551,23 +654,39 @@ class Node
 
     int main()
     {
-        SortByName sbn;
-        SortBySurname sbs;
-        SortByAge sba;
-        SortByIq sbi;
-        BST<Specialist> tree(&sba);
+        SortByName sbname;
+        SortBySurname sbsurname;
+        SortByAge sbage;
+        SortByIq sbiq;
+
+        BST<Specialist> tree(&sbage);
 
         string arrayN[] = {"G", "C", "B", "A", "I", "E", "D", "F", "H", "?"};
         char arrayS[] = {'g', 'c', 'b', 'a', 'i', 'e', 'd', 'f', 'h', '!'};
         int arrayA[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
         float arrayI[] = {0.7, 0.3, 0.2, 0.1, 0.9, 0.5, 0.4, 0.6, 0.8, 0.65};
         
-        for (int i = 0; i < sizeof(arrayN) / sizeof(arrayN[0]); ++i)
+        for (int i = 0; i < sizeof(arrayA) / sizeof(arrayA[0]); ++i)
         {
             tree.add(Specialist(arrayN[i], arrayS[i], arrayA[i], arrayI[i]));
         }
 
-        tree.print();
+        //tree.print();
+
+        SortByA sba;
+        SortByB sbb;
+        SortByArea sbarea;
+        SortByPerimetr sbperimetr;
+
+        BST<Rectangle> derevo(&sbperimetr);
+
+        int j = sizeof(arrayA) / sizeof(arrayA[0]) - 1;
+        for (int i = 0; i < sizeof(arrayA) / sizeof(arrayA[0]); ++i)
+        {
+            derevo.add(Rectangle(arrayA[i], 10));
+            --j;
+        }
+        derevo.print();
 
         return 0;
     }
