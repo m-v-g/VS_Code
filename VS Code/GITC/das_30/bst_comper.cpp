@@ -8,7 +8,6 @@ class Specialist
         char surname;
         int age;
         float iq;
-        //int lang;
 
         Specialist(){}
 
@@ -18,7 +17,6 @@ class Specialist
             this->surname = surname;
             this->age = age;
             this->iq = iq;
-            //this->lang = lang;
         }
 
         void print()
@@ -27,8 +25,6 @@ class Specialist
             cout << name << endl;
             cout << surname << endl;
             cout << age << endl;
-            cout << iq << endl;
-            //cout << lang << endl;
         }
 
         friend ostream& operator<<(ostream& tpel, const Specialist spec)
@@ -50,6 +46,50 @@ class Comparator
         {
             return 111;
         }
+};
+
+
+
+class SortByName : public Comparator<Specialist> //
+{
+    public:
+        int hamematel(Specialist a, Specialist b)
+        {
+            if(a.name > b.name)
+            {
+                return 1;
+            }
+            else if(a.name < b.name)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+};
+
+class SortBySurname : public Comparator<Specialist> //
+{
+    public:
+        int hamematel(Specialist a, Specialist b)
+        {
+            if(a.surname > b.surname)
+            {
+                return 1;
+            }
+            else if(a.surname < b.surname)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
 };
 
 class SortByAge : public Comparator<Specialist> //
@@ -127,7 +167,7 @@ class Node
                     return;
                 }
                 print(temp->left);
-                cout << temp->value << "\t";
+                cout << temp->value;
                 print(temp->right);
             }
 
@@ -491,10 +531,13 @@ class Node
 
     int main()
     {
+        SortByName sbn;
+        SortBySurname sbs;
         SortByAge sba;
+        SortByIq sbi;
         BST<Specialist> tree(&sba);
 
-        char arrayN[] = {'G', 'C', 'B', 'A', 'I', 'E', 'D', 'F', 'H'};
+        char arrayN[] = {'G', 'C', 'B', 'A', 'I', 'E', 'D', 'F', 'H', '?'};
         char arrayS[] = {'g', 'c', 'b', 'a', 'i', 'e', 'd', 'f', 'h', '!'};
         int arrayA[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
         float arrayI[] = {0.7, 0.3, 0.2, 0.1, 0.9, 0.5, 0.4, 0.6, 0.8, 0.65};
