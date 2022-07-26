@@ -686,9 +686,13 @@ class Node
             derevo.add(Rectangle(arrayA[i], arrayA[j]));
             --j;
         }
+
         derevo.print();
 
-        
+        //BST<Rectangle> tsar = derevo;
+
+        //tsar.print();
+
 
         return 0;
     }
