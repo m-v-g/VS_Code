@@ -1,17 +1,36 @@
 #include <iostream>
 using namespace std;
 
+class Rectangle
+{
+    public:
+        int a;
+        int b;
+        int area;
+        int perimetr;
+
+        Rectangle(){}
+
+        Rectangle(int a, int b)
+        {
+            this->a = a;
+            this->b = b;
+            area = a * b;
+            perimetr = 2 * a + 2 * b;
+        }
+};
+
 class Specialist
 {
     public:
-        char name;
+        string name;
         char surname;
         int age;
         float iq;
 
-        Specialist(){}
+        Specialist(){} //konstruktor po umalchaniyu
 
-        Specialist(char name, char surname, int age, float iq)
+        Specialist(string name, char surname, int age, float iq)
         {
             this->name = name;
             this->surname = surname;
@@ -25,15 +44,16 @@ class Specialist
             cout << name << endl;
             cout << surname << endl;
             cout << age << endl;
+            cout << iq << endl;
         }
 
         friend ostream& operator<<(ostream& tpel, const Specialist spec)
         {
             cout << "==============" << endl;
-            tpel << spec.name << endl;
-            tpel << spec.surname << endl;
-            tpel << spec.age << endl;
-            tpel << spec.iq << endl;
+            tpel << "Spec name\t" << spec.name << endl;
+            tpel << "Spec surname\t" << spec.surname << endl;
+            tpel << "Spec age\t" << spec.age << endl;
+            tpel << "Spec iq\t" << spec.iq << endl;
             return tpel;
         }
 };
@@ -537,7 +557,7 @@ class Node
         SortByIq sbi;
         BST<Specialist> tree(&sba);
 
-        char arrayN[] = {'G', 'C', 'B', 'A', 'I', 'E', 'D', 'F', 'H', '?'};
+        string arrayN[] = {"G", "C", "B", "A", "I", "E", "D", "F", "H", "?"};
         char arrayS[] = {'g', 'c', 'b', 'a', 'i', 'e', 'd', 'f', 'h', '!'};
         int arrayA[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
         float arrayI[] = {0.7, 0.3, 0.2, 0.1, 0.9, 0.5, 0.4, 0.6, 0.8, 0.65};
