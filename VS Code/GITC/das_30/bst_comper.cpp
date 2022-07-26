@@ -558,6 +558,7 @@ class Node
             BST() //konstruktor po umolchaniyu
             {
                 cout << "Vizvolsya konstruktor dlya obekta " << this << endl;
+                comparator = nullptr;
             }
 
             BST(Comparator<TypeA>* ptr)
