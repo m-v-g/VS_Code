@@ -1,40 +1,128 @@
 #include <iostream>
 using namespace std;
 
-template <class Type1, class Type2, class Type3, class Type4>
-class Spec
+class Specialist
+{
+    public:
+        char name;
+        char surname;
+        int age;
+        float iq;
+        //int lang;
+
+        Specialist(){}
+
+        Specialist(char name, char surname, int age, float iq)
+        {
+            this->name = name;
+            this->surname = surname;
+            this->age = age;
+            this->iq = iq;
+            //this->lang = lang;
+        }
+
+        void print()
+        {
+            cout << "---------------" << endl;
+            cout << name << endl;
+            cout << surname << endl;
+            cout << age << endl;
+            cout << iq << endl;
+            //cout << lang << endl;
+        }
+
+        friend ostream& operator<<(ostream& tpel, const Specialist spec)
+        {
+            cout << "==============" << endl;
+            tpel << spec.name << endl;
+            tpel << spec.surname << endl;
+            tpel << spec.age << endl;
+            tpel << spec.iq << endl;
+            return tpel;
+        }
+};
+
+template <class TypeC>
+class Comparator
+{
+    public:
+        virtual int hamematel(TypeC a, TypeC b) //or es hamematel@ chkanchvi
+        {
+            return 111;
+        }
+};
+
+class SortByAge : public Comparator<Specialist> //
+{
+    public:
+        int hamematel(Specialist a, Specialist b)
+        {
+            if(a.age > b.age)
+            {
+                return 1;
+            }
+            else if(a.age < b.age)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+};
+
+class SortByIq : public Comparator<Specialist> //
+{
+    public:
+        int hamematel(Specialist a, Specialist b)
+        {
+            if(a.iq > b.iq)
+            {
+                return 1;
+            }
+            else if(a.iq < b.iq)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+};
+
+template <class TypeB>
+class Node
     {
         public:
-            Type1 name;
-            Type2 surname;
-            Type3 age;
-            Type4 iq;
-            Node<Type1>* left;
-            Node<Type1>* right;
-            Node<Type1>* parent;
+            TypeB value;
+            Node<TypeB>* left;
+            Node<TypeB>* right;
+            Node<TypeB>* parent;
                 
-            Node(Type1 name, Type2 surname, Type3 age, Type4 iq) //nor terev stexcelu konstruktor
+            Node(TypeB x) //nor terev stexcelu konstruktor
             {
-                this->name = name;
-                this->surname = surname;
-                this->age = age;
-                this->iq = iq;
+                value = x;
                 left = nullptr;
                 right = nullptr;
                 parent =nullptr;
             }
     }; 
 
-    template <class TypeN, class TypeS, class TypeA, class TypeI>
+    template <class TypeA>
     class BST //binarnoe derevo poiska
     {
         private:
-            Node<class TypeN, class TypeS, class TypeA, class TypeI>* root = nullptr;
+            Comparator<TypeA>* comparator; //cmparator anunov member vor@ Cmparator -i ukazatel tesaki e
+            Node<TypeA>* root = nullptr;
             int leavesAmount = 0;
 
-            void print(auto temp) //rekursivnaya funkciya pechati
+            void print(Node<TypeA>* temp) //rekursivnaya funkciya pechati
             {
-                if(!temp)
+                if(!temp) //ete @ntaciki dzax koxm@ banm ka
                 {
                     return;
                 }
@@ -43,7 +131,7 @@ class Spec
                 print(temp->right);
             }
 
-            void destroy(auto &temp) //rekursivnaya funkciya unichtojeniya
+            void destroy(Node<TypeA>* &temp) //rekursivnaya funkciya unichtojeniya
             {
                 if(!temp)
                 {
@@ -58,19 +146,21 @@ class Spec
                 temp = nullptr;
             }
 
-            bool add(int x, auto &temp) //peredayom ne ukazatel a ssilku na etot ukazatel
+            bool add(TypeA x, Node<TypeA>* &temp) //!peredayom ne ukazatel a ssilku na etot ukazatel
             {
-                if(!temp) //ete khandipenq zroyakan ukazatel
+                if(!temp) //!ete khandipenq zroyakan ukazatel
                 {
                     ++ leavesAmount;
-                    temp = new auto(x);
+                    temp = new Node<TypeA>(x);
                     return true;
                 }
-                else if(x == temp->value)
+                else if(comparator->hamematel(x, temp->value) == 0)
+                //else if(x == temp->value)
                 {
                     return false;
                 }
-                else if(x < temp->value) //ete x poqr e @ntaciqi valuic uremn kerdanq dzax
+                else if(comparator->hamematel(x, temp->value) == -1)
+                //else if(x < temp->value) //ete x poqr e @ntaciqi valuic uremn kerdanq dzax
                 {
                     bool ret = add(x, temp->left); //rekursiv kanchenq es funkcian bayc arden @ntacikic dzax
                     temp->left->parent = temp; //kanchic het galuc heto 
@@ -84,7 +174,7 @@ class Spec
                 }
             }
 
-            auto find(auto temp, int copyX) //rekursivnaya funkciya poiska
+            Node<TypeA>* find(Node<TypeA>* temp, TypeA copyX) //rekursivnaya funkciya poiska
             {
                 if(!temp)
                 {
@@ -106,7 +196,7 @@ class Spec
                 return nullptr;
             }
 
-            bool compare(auto temp1, auto temp2) //rekursivnaya funkciya sravneniya
+            bool compare(Node<TypeA>* temp1, Node<TypeA>* temp2) //rekursivnaya funkciya sravneniya
             {
                 if((temp1 && !temp2) || (!temp1 && temp2))
                 {
@@ -126,7 +216,7 @@ class Spec
                 return l && r;
             }
 
-             void copyRec(const auto temp) //rekursivnaya funkciya kopirovaniya
+             void copyRec(const Node<TypeA>* temp) //rekursivnaya funkciya kopirovaniya
             {
                 if(temp)
                 {
@@ -136,7 +226,7 @@ class Spec
                 }
             }
 
-            bool delNodeParent(auto temp, int val) //funkciya udaleniya
+            bool delNodeParent(Node<TypeA>* temp, TypeA val) //funkciya udaleniya
             //                      7
             //                     / \
             //                    3   9
@@ -186,7 +276,7 @@ class Spec
                 else if(temp->left != nullptr && temp->right != nullptr) //ete uni ham aj ham dzax terevner
                 { //uremn gtnenq @ntacikic meceric amenapoqr@
                     cout << "armat e 2 cyuxov" << endl;
-                    auto minimal = temp->right; //erdanq aj gtnenq edtexac amena dzax@
+                    Node<TypeA>* minimal = temp->right; //erdanq aj gtnenq edtexac amena dzax@
                     while(minimal->left) //dzax koxmov ijninq minchev verj
                     {
                         minimal = minimal->left;
@@ -213,7 +303,7 @@ class Spec
             }        
 
 
-        auto delNode(auto temp, int val) // rekursivnaya funkciya udaleniya
+        Node<TypeA>* delNode(Node<TypeA>* temp, TypeA val) //TODO rekursivnaya funkciya udaleniya
             //                      7
             //                     / \
             //                    3   9
@@ -226,33 +316,44 @@ class Spec
             {
                 if(!temp) //ete datark e
                 {
+                    cout << "the tree is empty" << endl;
                     return temp; //zaglushka or hamarvi false
                 }
                 if(val == temp->value) //ete gtel enq
                 {
-                    auto tmp; //stexcenq or krnananq erdanq araj
+                    Node<TypeA>* tmp; //stexcenq or krnananq erdanq araj
                     if(!temp->right) //ete chuni aj terev
                     {
+                        cout << "obrivaem svyazi" << endl;
                         tmp = temp->left; //zaglushka
                     }
                     else //ete uni aj terev
                     {
-                        auto ptr = temp->right; //jamanakavor popoxaan sarqenq u ira mej pahenq aj terevin
+                        Node<TypeA>* ptr = temp->right; //jamanakavor popoxaan sarqenq u ira mej pahenq aj terevin
                         if(!ptr->left) //ete ed aj@ dzax chuni
                         {
+                            cout << "perekidivaem svyazi s leva" << endl;
                             ptr->left = temp->left; //or hankarc dzax chyux@ chkorcnenq
 				            tmp = ptr;//zaglushka
                         }
                         else //ete vseotaki uni
                         {
                             
-                            auto minimal = ptr->left;
+                            Node<TypeA>* minimal = ptr->left;
                             
                             while(minimal->left) //ijnenq dzaxov minchev verj
                             { //ptr misht me qaylm het kexni minimalic (parent)
+                                cout << "444444444444444444" << endl;
                                 ptr  = minimal;
                                 minimal = minimal->left;
                             }
+                            /*
+                            ptr->left   = minimal->right;
+                            minimal->left  = temp->left;
+                            minimal->right = temp->right;
+                            tmp = minimal;
+                            return nullptr;
+                            */
                             temp->value = minimal->value; //gtac minimal arjeq@ grenq tempi mej
                             if(temp->right->left == nullptr && temp->right->right == nullptr) //ete temp aj@ terev e
                             {
@@ -266,19 +367,23 @@ class Spec
                             return temp;
                         }
                     }
-
+                    cout << "uje mojno udalit" << endl;
                     temp->left = temp ->right = nullptr; //sranov xzum enq tempi bolor kaper@
                     destroy(temp);
+                    //delete temp;
+                    //-- leavesAmount;
 		            return tmp; //banm het veradardznenq or hamarvi true
                 }
                 
 		        else if(val < temp->value) //ete poqr e
                 {
+                    cout << "rekursivny shag vlevo" << endl;
                     temp->left = delNode(temp->left, val); //erdanq dzax
                 }
 
                 else //ete mec e
                 {
+                    cout << "rekursivny shag vpravo" << endl;
                     temp->right = delNode(temp->right, val); //erdanq aj
                 }
 
@@ -289,16 +394,24 @@ class Spec
 
             BST() //konstruktor po umolchaniyu
             {
+                cout << "Vizvolsya konstruktor dlya obekta " << this << endl;
+            }
+
+            BST(Comparator<TypeA>* ptr)
+            {
+                this->comparator = ptr;
             }
 
             BST(BST& other) //konstruktor kopirovaniya
             {
-                auto temp = other.root;
+                cout << "Vizvolsya konstruktor kopirovaniya dlya obekta " << this << endl;
+                Node<TypeA>* temp = other.root;
                 copyRec(temp);
             }
 
             ~BST() //destruktor
             {
+                cout << "Vizvolsya destruktor dlya obekta " << this << endl;
                 destroy(root);
                 
             }
@@ -315,7 +428,7 @@ class Spec
                 } 
             }
 
-            bool add(int x) //publichnaya abeortka dlya funkcii dobavleniya
+            bool add(TypeA x) //publichnaya abeortka dlya funkcii dobavleniya
             {
                 return add(x, root);
             }
@@ -327,18 +440,23 @@ class Spec
                 cout << endl;
             }
 
-            bool find(int temp) //publichnaya abeortka dlya funkcii poiska
+            bool find(TypeA temp) //publichnaya abeortka dlya funkcii poiska
             {
                 return find(root, temp);
             }
 
-            void delValue(int x)//publichnaya abeortka dlya funkcii udaleniya
+            void delValue(TypeA x)//publichnaya abeortka dlya funkcii udaleniya
             {
+                //Node* temp = find(root, x);
+                //delNode(temp, x);
                 delNode(root, x);
             }
 
             bool operator== (BST& other) //operator sravneniya
             {      
+                //cout << "Vizvolsya operator sravneniya dlya obekta " << this->root << endl;
+                //cout << "Vizvolsya operator sravneniya dlya obekta " << other.root << endl;
+                //if(this->root == other.root) //ete hamematum enq 2 nuyn obyektner@
                 if(this == &other) //ete hamematum enq 2 nuyn obyektner@
                 {
                     return true;
@@ -357,11 +475,13 @@ class Spec
             
             BST& operator= (const BST& other) //operator prisvoivoniya
             {
+                //cout << "this root value: " << this->root->value << endl;
                 if(root)
                 {
                     destroy(root);
                 }
-                autotemp = other.root;
+                Node<TypeA>* temp = other.root;
+                //cout << "other root value: " << temp->value << endl;
                 copyRec(temp);
                 return *this;   
             }
@@ -371,19 +491,20 @@ class Spec
 
     int main()
     {
-        BST<char, char, int, float> tree;
+        SortByAge sba;
+        BST<Specialist> tree(&sba);
 
-        char arrayN[] = {'G', 'C', 'B', 'A', 'I', 'E', 'D', 'F', 'H', '?'};
+        char arrayN[] = {'G', 'C', 'B', 'A', 'I', 'E', 'D', 'F', 'H'};
         char arrayS[] = {'g', 'c', 'b', 'a', 'i', 'e', 'd', 'f', 'h', '!'};
         int arrayA[] = {70, 30, 20, 10, 90, 50, 40, 60, 80, 65};
         float arrayI[] = {0.7, 0.3, 0.2, 0.1, 0.9, 0.5, 0.4, 0.6, 0.8, 0.65};
-        for (int i = 0; i < sizeof(arrayA) / sizeof(arrayA[0]); ++i)
+        
+        for (int i = 0; i < sizeof(arrayN) / sizeof(arrayN[0]); ++i)
         {
-            tree.add(arrayN[i], arrayS[i], arrayA[i], arrayI[i]);
+            tree.add(Specialist(arrayN[i], arrayS[i], arrayA[i], arrayI[i]));
         }
-        //tree.add(65);
-        //tree.delValue(65);
-        //tree.print();
- 
+
+        tree.print();
+
         return 0;
     }
