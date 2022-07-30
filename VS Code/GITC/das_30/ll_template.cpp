@@ -152,8 +152,8 @@ class Stack
             if(head == nullptr)
             {
                 //IndexOutOfBounds ex("List is empty", "List is empty", listsQuantity, time(0));
-                exception ex;
-                throw ex;
+                //throw exception();
+                throw "List is empty";
             }
             else
             {
@@ -367,7 +367,7 @@ int main()
 
     try
     {
-        //daran.pop();
+        daran.pop();
         for (int i = 0; i < sizeof(arrayA) / sizeof(arrayA[0]); ++i)
         {
             daran.push(Specialist(arrayN[i], arrayS[i], arrayA[i], arrayI[i]));
@@ -393,23 +393,12 @@ int main()
     }
     catch(exception& exp)
     {
-        cout << exp.what();
+        cout << "Menq brnecinq: " << exp.what() << endl;
     }
-    
+    catch(const char *exp)
+    {
+        cout << "We catch: " << exp << endl;
+    }
 
-    
-/*
-    Queue hert;
-    hert.push(11);
-    hert.push(22);
-    cout << "hertic stacanq " << hert.pop() << endl;
-
-    Deque erkkhert;
-    erkkhert.push_front(111);
-    erkkhert.push_back(222);
-    erkkhert.push_back(333);
-    cout << "erkkoxmani herti demic stacanq " << erkkhert.pop_front() << endl;
-    cout << "erkkoxmani herti hetevic stacanq " << erkkhert.pop_back() << endl;
-*/
     return 0;
 }

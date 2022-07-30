@@ -9,8 +9,8 @@ class Node
         Type1 kay;
         Type2 val;
         int index = 0;
-        Node* prev;
-        Node* next;
+        Node<Type1, Type2>* prev;
+        Node<Type1, Type2>* next;
 
         Node(Type1 k, Type2 v)
         {
@@ -21,12 +21,12 @@ class Node
         }
 };
 
-template<class type1, class type2>
+template<class TypeA, class TypeB>
 class Stack
 {
     private:
-        Node<type1, type2>* head = nullptr;
-        Node<type1, type2>* tail = nullptr;
+        Node<TypeA, TypeB>* head = nullptr;
+        Node<TypeA, TypeB>* tail = nullptr;
         int userQuantity = 0;
 
     public:
@@ -58,10 +58,10 @@ class Stack
                 cout << endl << endl;
         }
 
-        void push (type1 kay, type2 val)
+        void push (TypeA kay, TypeB val)
         {
             //Node<type1, type2>* temp = new Node<type1, type2>(kay, val);
-            auto temp = new Node<type1, type2>(kay, val);
+            auto temp = new Node<TypeA, TypeB>(kay, val);
 
             if(head == nullptr)
             {
@@ -88,7 +88,7 @@ class Stack
             return;
         }
 
-        Node<type1, type2> pop()
+        Node<TypeA, TypeB> pop()
         {
             if(head == nullptr)
             {
@@ -105,7 +105,7 @@ class Stack
             }
         }
 
-        bool find (type1 kayCopy)
+        bool find (TypeA kayCopy)
         {
             //Node<type1, type2>* temp = head;
             auto temp = head;
@@ -146,7 +146,7 @@ class Stack
 
 int main()
 {
-    try{
+    //try{
         Stack<int, int> vk;
         vk.push(55, 5);
         vk.push(66, 6);
@@ -158,12 +158,12 @@ int main()
         ok.print();
 
         auto t = vk.pop();
-        cout << t->kay << endl;
-        cout << t->val << endl;
-    }
-    catch{
+        //cout << t->kay << endl;
+        //cout << t->val << endl;
+    //}
+    //catch{
 
-    }
+    //}
 
     return 0;
 }
