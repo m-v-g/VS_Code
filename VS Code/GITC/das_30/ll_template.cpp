@@ -225,8 +225,7 @@ class Queue
         {
             if(head == nullptr)
             {
-                exception ex;
-                throw ex;
+                throw "List is empty";
             }
             else
             {
@@ -319,8 +318,7 @@ class Deque
         {
             if(head == nullptr)
             {
-                exception ex;
-                throw ex;
+                throw "List is empty";
             }
             else
             {
@@ -337,8 +335,7 @@ class Deque
         {
             if(head == nullptr)
             {
-                exception ex;
-                throw ex;
+                throw "List is empty";
             }
             else
             {
