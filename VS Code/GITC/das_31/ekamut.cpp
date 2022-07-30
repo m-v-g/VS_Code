@@ -20,7 +20,7 @@ int main()
     {
         gyumri.add(Income(arrayN[i], arrayA[i], arrayA[i]/i, arrayI[i], arrayI[i]/i, arrayA[i]/arrayI[i]));
     }
-
+    gyumri.print();
 
     return 0;
 }
