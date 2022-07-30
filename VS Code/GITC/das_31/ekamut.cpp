@@ -10,6 +10,7 @@
 int main()
 {
     SortByTotal sbt;
+    SortByName sbn;
     BST<Income> gyumri(&sbt);
 
     std::string arrayN[] = {"Gd", "Ca", "Bv", "Af", "Ij", "Er", "Dd", "Ff", "Hm", "?"};
