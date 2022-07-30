@@ -15,7 +15,7 @@ template <class TypeA>
                     return;
                 }
                 print(temp->left);
-                cout << temp->value;
+                std::cout << temp->value;
                 print(temp->right);
             }
 
@@ -319,7 +319,7 @@ template <class TypeA>
             {
                 std::cout << "the trees Leaves Amount " << leavesAmount << std::endl;
                 print(root); //stexic nor krnanq peregruzkov mer iskakan funkciain kanchenq
-                cout << endl;
+                std::cout << std::endl;
             }
 
             bool find(TypeA temp) //publichnaya abeortka dlya funkcii poiska

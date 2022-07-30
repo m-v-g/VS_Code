@@ -1,9 +1,9 @@
 #include <iostream>
 #include <ctime>
 #include "bst.h"
-#include "node.h"
-#include "income.h"
-#include "other_class.h"
+//#include "node.h"
+//#include "income.h"
+//#include "other_class.h"
 
 //using namespace std;
 

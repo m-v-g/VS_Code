@@ -28,6 +28,7 @@ class Income
         friend std::ostream& operator<<(std::ostream& tpel, const Income obj)
         {
             std::cout << "==============" << std::endl;
+            tpel << "Name:\t" << obj.name << std::endl;
             tpel << "From Store:\t" << obj.fromStore << std::endl;
             tpel << "From Tender:\t" << obj.fromTender << std::endl;
             tpel << "From Instalation:\t" << obj.fromInstalation << std::endl;
