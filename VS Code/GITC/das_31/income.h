@@ -1,7 +1,8 @@
-using namespace std;
+#include <iostream>
 class Income
 {
     public:
+        std::string name;
         double fromStore;
         double fromTender;
         double fromInstalation;
@@ -12,8 +13,9 @@ class Income
 
     
         Income(){}
-        Income(double st, double te, double in, double ca, double se)
+        Income(std::string na, double st, double te, double in, double ca, double se)
         {
+            name = na;
             fromStore = st;
             fromTender = te;
             fromInstalation = in;
@@ -26,10 +28,13 @@ class Income
         friend std::ostream& operator<<(std::ostream& tpel, const Income obj)
         {
             std::cout << "==============" << std::endl;
-            tpel << "Rect a:\t" << rec.a << endl;
-            tpel << "Rect b:\t" << rec.b << endl;
-            tpel << "Rect area:\t" << rec.area << endl;
-            tpel << "Rect perimetr:\t" << rec.perimetr << endl;
+            tpel << "From Store:\t" << obj.fromStore << std::endl;
+            tpel << "From Tender:\t" << obj.fromTender << std::endl;
+            tpel << "From Instalation:\t" << obj.fromInstalation << std::endl;
+            tpel << "From Cash Back:\t" << obj.fromCashBack << std::endl;
+            tpel << "From Service:\t" << obj.fromService << std::endl;
+            std::cout << "~~~~~~~~~~~~~~~~" << std::endl;
+            tpel << "AVERAGE:\t" << obj.total << std::endl;
             return tpel;
         }
 };

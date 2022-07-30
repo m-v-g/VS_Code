@@ -1,3 +1,4 @@
+#include "other_class.h"
 template <class TypeA>
     class BST //binarnoe derevo poiska
     {

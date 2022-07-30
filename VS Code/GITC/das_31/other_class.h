@@ -10,7 +10,7 @@ class Comparator
         }
 };
 
-class SortByA : public Comparator<Income> //
+class SortByTotal : public Comparator<Income> //
 {
     public:
         int hamematel(Income objectA, Income objectB)
@@ -20,6 +20,26 @@ class SortByA : public Comparator<Income> //
                 return 1;
             }
             else if(objectA.total < objectB.total)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+};
+
+class SortByName : public Comparator<Income> //
+{
+    public:
+        int hamematel(Income objectA, Income objectB)
+        {
+            if(objectA.name > objectB.name)
+            {
+                return 1;
+            }
+            else if(objectA.name < objectB.name)
             {
                 return -1;
             }
