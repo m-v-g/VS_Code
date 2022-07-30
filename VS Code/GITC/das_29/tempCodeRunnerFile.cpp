@@ -1,1 +1,0 @@
-cout << asd.pop_front() << endl;

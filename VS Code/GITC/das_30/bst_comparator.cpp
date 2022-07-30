@@ -570,6 +570,7 @@ class Node
             {
                 cout << "Vizvolsya konstruktor kopirovaniya dlya obekta " << this << endl;
                 Node<TypeA>* temp = other.root;
+                this->comparator = other.comparator; //! aranc sra chi ashxadi
                 copyRec(temp);
             }
 
@@ -646,6 +647,7 @@ class Node
                 }
                 Node<TypeA>* temp = other.root;
                 //cout << "other root value: " << temp->value << endl;
+                this->comparator = other.comparator; //! aranc sra chi ashxadi
                 copyRec(temp);
                 return *this;   
             }
@@ -688,11 +690,13 @@ class Node
             --j;
         }
 
-        derevo.print();
+        //derevo.print();
 
         //BST<Rectangle> tsar = derevo;
+        BST<Rectangle> tsar;
+        tsar = derevo;
 
-        //tsar.print();
+        tsar.print();
 
 
         return 0;

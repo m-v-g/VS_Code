@@ -28,7 +28,7 @@ class MyExeption
             cout << "when happened: " << ctime(&erb) << endl;
             cout << "-------------------------------------------" << endl;
         } 
-        };
+};
 
 int main()
 {
